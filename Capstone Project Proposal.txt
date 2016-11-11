@@ -1,0 +1,43 @@
+Yohannes Fessehatsion
+Oct. 29, 2016
+
+Analysis and Visualization of Rap Lyrics (PREFERRED PROJECT)
+
+Rapping, spoken rhyming words, involves to creatively construct an elaborate and meaningful story. Rapping differ from spoken word poetry by it's usage of external musical beat. While rapping has its roots in Africa, rap music reemerged in New York in the 1970s. Since its reemergence, rap has rapidly evolved from simple rhyming intended for a party atmosphere, to much more complex word play rhyming to genre-crossing of today that has a global reach.
+
+Analyzing rap lyrics algorithmically requires understanding the different types of rhyming structure; perfect and imperfect rhymes.[1] Perfect rhymes consists of words that sounds similar such as school and stool. Imperfect rhymes only partially share similar sounds; train and restrain are imperfect rhymes
+
+The aim of this capstone project is to create a web app that identify and visually present families of words that rhyme; words that rhymes will be highlighted using similar color[?]. The outline of the process is as follows:
+
+1. Tokenize each word and translate each word into phonetic language. CMU dictionary will be used to achieve such task.
+
+2. Devise a rhyme scoring system between each words. This will yield an undirected graph with syllables as nodes and their score as the weight of the edges. Stressed syllable of words is rhymes tennd to be heard most strongly between two stressed or emphasised syllables. As such, scoring scheme will follow as such.
+
+Approach 1:
+- Two matching stressed syllables are given the highest score possibles.
+- A pair of syllables with a single stresssed are less likely to rhymes and thus are given a lower score
+- The lowest score is giveb to two unstressed syllables.
+
+Approach 2:
+- Use cosine similarities between phoentic words to assign a score value of each rhyme.
+
+Final score allocation will depend based on qualitative evaluation of MCL Algorithm
+
+3. Group each rhyming words based on their rhyming sounds. Markov Cluster Algorithm will be used to group the nodes. 
+
+- I want this to be chosen automatically by the algorithm. I am formulating how to automate the best count of clusters to chose from.
+
+4. Devise a visualization scheme. 
+
+- Syllables that fall under the same ryhyme category will be displayed in the same color.
+
+[IDEALLY: what I have in mind is say in step 3, MCA determines 4-cluster solution is the best solution. Then I want to create 5 lines. The first line will be reserved for sentence fillers; words used to complete a line but doesn't necessarily rhyme with other words, and the other four lines for each cluster. The text would pipe according to their cluster assignment.]
+
+In the following weeks, I will be researching other text/lyrics analysis papers to create a scoring scheme for rhymes and means of visualization. Lyrics used for evaluation of the algorithms will be scrapped from genius.com. The capstone project will presented with slides and potentially have a demonstration of the web application. 
+
+[1] Hinton Erik & Eastwood Joel. "Playing With Pop Culture: Writing an Algorithm To analyses and Visualize Lyrics From the Musical "Hamilton." 
+[2] Woods, David L., E. Williams Yund, Timothy J Herrom, & Matthew A. I. Ua Cruadhlaoich."Consonant Identification in Consonant-Vowel_Consonant Syllables in speech_spectrum Noise" 
+[3] genius.com
+[4] http://www.speech.cs.cmu.edu/cgi-bin/cmudict
+[5] https://www.youtube.com/watch?v=ZgJyhKEZ8QU
+
