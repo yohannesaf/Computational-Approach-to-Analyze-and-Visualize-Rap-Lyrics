@@ -25,15 +25,15 @@ def word_aphabet_dict(string):
     '''
     aphabet = cmudict.dict()
     word_phonetic = OrderedDict()
-    # for line in string:
-    print line
-    print '\n***************\n'
-    for word in string:
-        try:
-            # print word
-            word_phonetic.update({word:aphabet[word][0]})
-        except Exception as e:
-            print e
+    for l in string:
+        print l
+        print '\n***************\n'
+        for word in l:
+            try:
+                # print word
+                word_phonetic.update({word:aphabet[word][0]})
+            except Exception as e:
+                print e
     return word_phonetic
 
 
@@ -54,14 +54,12 @@ def word_aphabet_tuple(string):
                 print e
     return output
 
-# output = word_aphabet(testing)
-# print output
 
 
 
 
 if __name__ == '__main__':
-    verse = read_tokenize_file('/home/yoyo/Desktop/mini.txt')
+    verse = read_tokenize_file('mini.txt')
     # for line in verse:
         # print verse
         # print '\n******2******\n'
