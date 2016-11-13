@@ -25,10 +25,8 @@ def word_aphabet_dict(string):
     '''
     aphabet = cmudict.dict()
     word_phonetic = OrderedDict()
-    for l in string:
-        print l
-        print '\n***************\n'
-        for word in l:
+    for line in string:
+        for word in line:
             try:
                 # print word
                 word_phonetic.update({word:aphabet[word][0]})
@@ -59,7 +57,7 @@ def word_aphabet_tuple(string):
 
 
 if __name__ == '__main__':
-    verse = read_tokenize_file('mini.txt')
+    verse = read_tokenize_file('lyrics/mini.txt')
     # for line in verse:
         # print verse
         # print '\n******2******\n'
