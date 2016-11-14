@@ -28,8 +28,8 @@ def word_aphabet_dict(string):
     for line in string:
         for word in line:
             try:
-                # print word
-                word_phonetic.update({word:aphabet[word][0]})
+                # word_phonetic.update({word:aphabet[word][0]}) # using nltk
+                word_phonetic.update({word:pr.phones_for_word(word)[0]})
             except Exception as e:
                 print e
     return word_phonetic
@@ -47,19 +47,38 @@ def word_aphabet_tuple(string):
     for line in string:
         for  word in line:
             try:
-                output.append((word, aphabet[word][0]))
+                # output.append((word, aphabet[word][0])) # using nltk tools
+                output.append((word, pr.phones_for_word(word)[0]))
             except Exception as e:
                 print e
     return output
 
+def constructing_syllables(phonetic_dict):
+    vowels = 'aeiouAEIOU'
+    possible_sullable = []
+    #split each phonetics and combine as per rule.
+    # rules: Syllables fall between a vowels.
+    pass
+
+def is_vowel(char):
+    '''
+    Returns true if a character is a vowel
+    '''
+    vowels = 'aeiouAEIOU'
+    return char in vowels
+
+def is_num(char = 'x'):
+    '''
+    Returns true if a character is a number
+    '''
+    return char.isdigit()
 
 
 
 
 if __name__ == '__main__':
-    verse = read_tokenize_file('lyrics/mini.txt')
-    # for line in verse:
-        # print verse
-        # print '\n******2******\n'
-    phonetics = word_aphabet_tuple(verse)
-    print phonetics
+    verse = read_tokenize_file('lyrics/forgot.txt')
+    # verse = read_tokenize_file('lyrics/mini.txt')
+    check = is_vowel('w')
+    phonetics_dict = word_aphabet_dict(verse)
+    phonetics_tuple = word_aphabet_tuple(verse)
