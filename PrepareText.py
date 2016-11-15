@@ -21,7 +21,7 @@ class PrepareText(object):
 
     def read_tokenize_file(self, filepath):
         '''
-        Returns 2 - d lists of tokenize lyrics
+        Returns a lists of tokenize lyrics
         '''
         self.lyrics_tokenized = []
         with open(filepath) as f:
@@ -97,10 +97,10 @@ class PrepareText(object):
 
 
 if __name__ == '__main__':
-    verse = read_tokenize_file('lyrics/forgot.txt')
-    # verse = read_tokenize_file('lyrics/mini.txt')
-    check = is_vowel('w')
-    phonetics_dict = word_aphabet_dict(verse)
+    text = PrepareText()
+    text.read_tokenize_file('lyrics/forgot.txt')
+    text.word_aphabet_dict(text)
+    
     # phonetics_tuple = word_aphabet_tuple(verse)
     test = constructing_syllables(phonetics_dict)
     check = clean_syllables(test)
