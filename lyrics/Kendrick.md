@@ -1,4 +1,4 @@
-lright, here we go, third take, real quick Ali
+alright, here we go, third take, real quick Ali
 
 Got me breathing with dragons
 I'll crack the egg in your basket, you bastard
