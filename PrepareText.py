@@ -18,20 +18,16 @@ class PrepareText(object):
         # self.aphabet_tuple = None
         # self.syllable_tuple = None
 
-
     def read_tokenize_file(self, filepath):
         '''
         Returns a lists of tokenize lyrics
         '''
-        self.lyrics_tokenized = []
         with open(filepath) as f:
             for line in f.readlines():
-                self.lyrics_tokenized.append(word_tokenize(line.lower().strip()))
-
+                self.lyrics_tokenized.append(word_tokenize(line.lower().strip(' ')))
 
     def word_aphabet_dict(self):
         '''
-        Input: 2 - d list of tokenied workds
         Output: Ordered dictionary:
             Keys - word
             Value - phonetic representation of the key
@@ -40,21 +36,6 @@ class PrepareText(object):
             for word in line:
                 try:
                     self.aphabet_dict.update({word:pr.phones_for_word(word)[0]})
-                except Exception as e:
-                    print e
-
-
-    def word_aphabet_tuple(self):
-        '''
-        Input: 2 - d list of tokenied workds
-        Output: Tuple:
-            Keys - word
-            Value - phonetic representation of the key
-        '''
-        for line in self.lyrics_tokenized:
-            for  word in line:
-                try:
-                    self.aphabet_tuple.append((word, pr.phones_for_word(word)[0]))
                 except Exception as e:
                     print e
 
@@ -67,7 +48,7 @@ class PrepareText(object):
 
         Calls the function constructing_syllables & clean up the syllables
         '''
-        syl_temp = self._constructing_syllables(self.phonetic_dict)
+        syl_temp = self.constructing_syllables()
         for key, val in syl_temp.iteritems():
             word_sounds = []
             for syl in val:
@@ -77,30 +58,37 @@ class PrepareText(object):
                 word_sounds.append(sound)
             self.syllable_dict.update({key:word_sounds})
 
-    def _constructing_syllables(self):
+    def constructing_syllables(self):
         '''
-        Input: Ordered dictionary
-               Keys - word
-               Value - phonetic representation of the key
         Output: Ordered dictionary
                Keys - word
                Value - phonetic syllable replresentation of each word
         '''
         syl_list = OrderedDict()
-        for key, val in self.phonetic_dict.iteritems():
+        for key, val in self.aphabet_dict.iteritems():
             syl_of_key = syl(val.split())
             syl_list.update({key:syl_of_key})
         return syl_list
 
 
 
+    # def word_aphabet_tuple(self):
+    #     '''
+    #     Input: 2 - d list of tokenied workds
+    #     Output: Tuple:
+    #         Keys - word
+    #         Value - phonetic representation of the key
+    #     '''
+    #     for line in self.lyrics_tokenized:
+    #         for  word in line:
+    #             try:
+    #                 self.aphabet_tuple.append((word, pr.phones_for_word(word)[0]))
+    #             except Exception as e:
+    #                 print e
 
 
 if __name__ == '__main__':
     text = PrepareText()
-    text.read_tokenize_file('lyrics/forgot.txt')
-    text.word_aphabet_dict(text)
-    
-    # phonetics_tuple = word_aphabet_tuple(verse)
-    test = constructing_syllables(phonetics_dict)
-    check = clean_syllables(test)
+    text.read_tokenize_file('lyrics/mini.md')
+    text.word_aphabet_dict()
+    text.clean_syllables()
