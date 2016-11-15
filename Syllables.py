@@ -92,18 +92,7 @@ def constructing_syllables(phonetic_dict):
     return syl_list
 
 
-def is_vowel(char):
-    '''
-    Returns true if a character is a vowel
-    '''
-    vowels = 'aeiouAEIOU'
-    return char in vowels
 
-def is_num(char = 'x'):
-    '''
-    Returns true if a character is a number
-    '''
-    return char.isdigit()
 
 
 

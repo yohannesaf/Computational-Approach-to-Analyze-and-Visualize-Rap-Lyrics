@@ -24,7 +24,7 @@ class PrepareText(object):
         '''
         with open(filepath) as f:
             for line in f.readlines():
-                self.lyrics_tokenized.append(word_tokenize(line.lower().strip(' ')))
+                self.lyrics_tokenized.append(word_tokenize(line.lower().strip()))
 
     def word_aphabet_dict(self):
         '''
