@@ -3,7 +3,7 @@ import numpy as np
 import pronouncing as pr
 from nltk.tokenize import word_tokenize
 from collections import OrderedDict
-from syllabify.syllabify import syllabify as sly
+from syllabify.syllabify import syllabify as syl
 from nltk.corpus import cmudict
 
 
@@ -64,7 +64,7 @@ def clean_syllables(phonetic_dict):
 
     Calls the function constructing_syllables & clean up the syllables
     '''
-    phonetic_dict = constructing_syllables(phonetic_dict)
+    # phonetic_dict = constructing_syllables(phonetic_dict)
     clean_syll = OrderedDict()
     for key, val in phonetic_dict.iteritems():
         word_sounds = []
@@ -72,8 +72,8 @@ def clean_syllables(phonetic_dict):
             sound = []
             for ph in syl:
                 sound += ph
-            word_sound.append(sound)
-        clean_syll.update({key:word_sound})
+            word_sounds.append(sound)
+        clean_syll.update({key:word_sounds})
     return clean_syll
 
 def constructing_syllables(phonetic_dict):
@@ -115,4 +115,4 @@ if __name__ == '__main__':
     phonetics_dict = word_aphabet_dict(verse)
     # phonetics_tuple = word_aphabet_tuple(verse)
     test = constructing_syllables(phonetics_dict)
-    check = clean_syll(test)
+    check = clean_syllables(test)
