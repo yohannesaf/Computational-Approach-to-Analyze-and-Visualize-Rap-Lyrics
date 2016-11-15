@@ -2,8 +2,10 @@ import pandas as pd
 import numpy as np
 import pronouncing as pr
 from nltk.tokenize import word_tokenize
-from nltk.corpus import cmudict
 from collections import OrderedDict
+from syllabify.syllabify import syllabify as sly
+from nltk.corpus import cmudict
+
 
 def read_tokenize_file(filepath):
     '''
@@ -54,11 +56,15 @@ def word_aphabet_tuple(string):
     return output
 
 def constructing_syllables(phonetic_dict):
-    vowels = 'aeiouAEIOU'
-    possible_sullable = []
-    #split each phonetics and combine as per rule.
-    # rules: Syllables fall between a vowels.
-    pass
+    syl_list = OrderedDict()
+    for key, val in phonetic_dict.iteritems():
+        syl_of_key = syl(val.split())
+        syl_list.update({key:syl_of_key})
+    return syl_list
+
+def 
+
+
 
 def is_vowel(char):
     '''
@@ -82,3 +88,4 @@ if __name__ == '__main__':
     check = is_vowel('w')
     phonetics_dict = word_aphabet_dict(verse)
     phonetics_tuple = word_aphabet_tuple(verse)
+    print sly(phonetics_dict.values()[-1].split())
