@@ -37,9 +37,14 @@ In the following weeks, I will be researching other text/lyrics analysis papers 
   
 
 [1]. Hinton Erik & Eastwood Joel. "Playing With Pop Culture: Writing an Algorithm To analyses and Visualize Lyrics From the Musical "Hamilton." 
+
 [2]. Woods, David L., E. Williams Yund, Timothy J Herrom, & Matthew A. I. Ua Cruadhlaoich."Consonant Identification in Consonant-Vowel_Consonant Syllables in speech_spectrum Noise" 
+
 [3].  genius.com
+
 [4]. http://www.speech.cs.cmu.edu/cgi-bin/cmudict
+
 [5]. https://www.youtube.com/watch?v=ZgJyhKEZ8QU
+
 [6]. http://www.micans.org/mcl/intro.html
 
