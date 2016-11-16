@@ -39,17 +39,13 @@ text.clean_syllables()
 def similarity_mat():
     syl_list1 = syllable_list()
     syl_list2 = copy.deepcopy(syl_list1)
-    size = len(syl_list1)
     score = score_size()
     for ind1, val1 in enumerate(syl_list1):
         for ind2, val2 in enumerate(syl_list2):
-            # print (ind1, ind2)
             if val1 != val2:
                 common_sound = sound_intersect(val1, val2)
                 if len(common_sound) > 0:
-                    # pre_score = SOMETHING
-                    # suf_score = SOMETHING
-                    # Vowel_score = SOMETHING
+                    # points = final_score(val1, val2, common_sound)
                     score[ind1][ind2] = 1
                 else:
                     score[ind1][ind2] = 0
@@ -69,8 +65,17 @@ def score_size():
         size += len(word)
     return np.zeros((size,size))
 
-def final_score(common_sounds):
-    pass
+# CONTINUE FROM HERE
+# def final_score(phonetic1, phonetic2, common_sounds):
+#     points = 0
+#     for sound in common_sounds:
+#         if len(sound) > 1:
+#             points += vowel_score(sound)
+#         else:
+#             ind1 = phonetic1.index(sound)
+#             ind2 = phonetic2.index(sound)
+#             if (ind1 == ind2) and :
+#                 prefix = prefix_score()
 
 def prefix_score():
     pass
@@ -78,18 +83,21 @@ def prefix_score():
 def suffix_score():
     pass
 
-def vowel_score():
-    pass
+def vowel_score(syllable):
+    if syllable[-1] > 1:
+        return len(syllable) * 2
+    else:
+        return len(syllable)
 
 def sound_intersect(phonetic1, phonetic2):
     return list(set(phonetic1) & set(phonetic2))
 
-def is_vowel(char):
+def is_vowel(text):
     '''
     Returns true if a character is a vowel
     '''
     vowels = 'aeiouAEIOU'
-    return char in vowels
+    return [True if any char in vowels for char in text]
 
 def is_num(char = 'x'):
     '''
