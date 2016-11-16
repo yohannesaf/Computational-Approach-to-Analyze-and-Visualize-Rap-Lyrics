@@ -5,47 +5,55 @@ from sklearn.feature_extraction.text import CountVectorizer
 from itertools import combinations
 import copy
 
-class ScoreMechanism(PrepareText):
+class ScoreMechanism(object):
 
-    def __init__(self):
-        self.score_matrix = self.score_mat()
-        self.col = self.syllable_list()
+    def __init__(self, lyrics_tokenized, syllable_dict):
+        self.lyrics_tokenized = lyrics_tokenized
+        self.syllable_dict = syllable_dict
+        self.col = []
+        self.score_matrix = []
 
-    def similarity_mat():
+        self.syllable_list()
+        self.similarity_mat()
+
+
+    def similarity_mat(self):
+        # self.col = self.syllable_list()
+        # self.score_matrix = self.score_mat()
+        temp_score = self.score_shape()
         row = copy.deepcopy(self.col)
-        self.score = self.score_size()
         for ind1, val1 in enumerate(self.col):
             for ind2, val2 in enumerate(row):
                 if val1 != val2:
-                    common_sound = sound_intersect(val1, val2)
+                    common_sound = self.sound_intersect(val1, val2)
                     if len(common_sound) > 0:
-                        points = final_score(val1, val2, common_sound)
-                        self.score[ind1][ind2] = points
+                        points = self.final_score(val1, val2, common_sound)
+                        temp_score[ind1][ind2] = points
                     else:
-                        self.score[ind1][ind2] = 0
+                        temp_score[ind1][ind2] = 0
                 else:
-                    self.score[ind1][ind2] = np.nan
+                    temp_score[ind1][ind2] = np.nan
+        self.score_matrix = temp_score
 
-    # Update the input function
-    def syllable_list():
+    def syllable_list(self):
         '''
         Input: syllable dictionary with value
         Output: A list which consists all the syllables
 
         Unpacks the values into a single list
         '''
-        for val in self.text.syllable_dict.itervalues():
+        for val in self.syllable_dict.itervalues():
             self.col.extend(val)
-        return self.col
 
-    def score_mat():
+
+    def score_shape(self):
         dim = 0
-        for word in self.text.syllable_dict.itervalues():
+        for word in self.syllable_dict.itervalues():
             dim += len(word)
-        self.score_matrix = np.zeros((dim,dim))
+        return np.zeros((dim,dim))
 
 
-    def final_score(phonetic1, phonetic2, common_sounds):
+    def final_score(self, phonetic1, phonetic2, common_sounds):
         '''
         Input: 2 phonetic and list of common sounds between two phonetics
         Output: Score based on phonetic sound
@@ -55,20 +63,20 @@ class ScoreMechanism(PrepareText):
         points = 0
         for sound in common_sounds:
             if len(sound) > 1:
-                points += vowel_score(sound)
+                points += self.vowel_score(sound)
             else:
-                points += consonant_score(phonetic1, phonetic2, sound)
+                points += self.consonant_score(phonetic1, phonetic2, sound)
         return points
 
 
-    def consonant_score(phonetic1, phonetic2, sound):
+    def consonant_score(self, phonetic1, phonetic2, sound):
         '''
         Input: Consonant phone
         Output: Consonant phone score
 
         Assigns consonant phone score based on whether it is prefix or suffix
         '''
-        sound_pos = prefix_check(phonetic1, phonetic2, sound)
+        sound_pos = self.prefix_check(phonetic1, phonetic2, sound)
         if sound_pos == 1:
             return 1
         elif sound_pos == 2:
@@ -76,7 +84,7 @@ class ScoreMechanism(PrepareText):
         else:
             return 0
 
-    def prefix_check(phonetic1, phonetic2, sound):
+    def prefix_check(self, phonetic1, phonetic2, sound):
         '''
         Input: Two phonetic sounds with common element sound
         Output: Bool if the sound is prefix
@@ -95,7 +103,7 @@ class ScoreMechanism(PrepareText):
         else:
             return 0
 
-    def vowel_score(sound):
+    def vowel_score(self, sound):
         '''
         Input: Vowel phone
         Output: Vowel phone score
@@ -107,7 +115,7 @@ class ScoreMechanism(PrepareText):
         else:
             return len(sound) + 2
 
-    def sound_intersect(phonetic1, phonetic2):
+    def sound_intersect(self, phonetic1, phonetic2):
         '''
         Input: Two phonetic to be compared
         Output: sound found in both phonetic
@@ -116,14 +124,14 @@ class ScoreMechanism(PrepareText):
         '''
         return list(set(phonetic1) & set(phonetic2))
 
-    def is_vowel(text):
+    def is_vowel(self, text):
         '''
         Returns true if a character is a vowel
         '''
         vowels = 'aeiouAEIOU'
         return [True if char in vowels else False for char in text]
 
-    def is_num(char = 'x'):
+    def is_num(self, char):
         '''
         Returns true if a character is a number
         '''
@@ -132,10 +140,5 @@ class ScoreMechanism(PrepareText):
 
 
 if __name__ == '__main__':
-    text = PrepareText()
-    text.read_tokenize_file('lyrics/mini.md')
-    text.word_aphabet_dict()
-    text.clean_syllables()
-
-    sim = ScoreMechanism()
-    # print sim
+    text = PrepareText('lyrics/mini.md')
+    score = ScoreMechanism(text.lyrics_tokenized, text.syllable_dict)

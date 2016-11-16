@@ -11,12 +11,14 @@ class PrepareText(object):
     '''
     '''
 
-    def __init__(self):
+    def __init__(self, filepath):
         self.lyrics_tokenized = []
         self.aphabet_dict = OrderedDict()
         self.syllable_dict = OrderedDict()
-        # self.aphabet_tuple = None
-        # self.syllable_tuple = None
+
+        self.read_tokenize_file(filepath)
+        self.word_aphabet_dict()
+        self.clean_syllables()
 
     def read_tokenize_file(self, filepath):
         '''
@@ -71,8 +73,5 @@ class PrepareText(object):
         return syl_list
 
 
-# if __name__ == '__main__':
-#     text = PrepareText()
-#     text.read_tokenize_file('lyrics/mini.md')
-#     text.word_aphabet_dict()
-#     text.clean_syllables()
+if __name__ == '__main__':
+    text = PrepareText('lyrics/mini.md')
