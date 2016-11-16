@@ -66,30 +66,45 @@ def score_size():
     return np.zeros((size,size))
 
 # CONTINUE FROM HERE
-# def final_score(phonetic1, phonetic2, common_sounds):
-#     points = 0
-#     for sound in common_sounds:
-#         if len(sound) > 1:
-#             points += vowel_score(sound)
-#         else:
-#             ind1 = phonetic1.index(sound)
-#             ind2 = phonetic2.index(sound)
-#             if (ind1 == ind2) and :
-#                 prefix = prefix_score()
+def final_score(phonetic1, phonetic2, common_sounds):
+    points = 0
+    for sound in common_sounds:
+        if len(sound) > 1:
+            points += vowel_score(sound)
+        else:
+            ind1 = phonetic1.index(sound)
+            ind2 = phonetic2.index(sound)
+            if (ind1 == ind2) and :
+                prefix = prefix_score()
 
-def prefix_score():
+def consonant_score():
+    '''
+    Input: Consonant phone
+    Output: Consonant phone score
+
+    Assigns consonant phone score based on whether it is prefix or suffix
+    '''
     pass
 
-def suffix_score():
-    pass
+def vowel_score(sound):
+    '''
+    Input: Vowel phone
+    Output: Vowel phone score
 
-def vowel_score(syllable):
-    if syllable[-1] > 1:
-        return len(syllable) * 2
+    Assigns score to a common phone vowel bewteen 2 words based on their stress.
+    '''
+    if syllable[-1] > 0:
+        return len(syllable) * 3
     else:
-        return len(syllable)
+        return len(syllable) + 2
 
 def sound_intersect(phonetic1, phonetic2):
+    '''
+    Input: Two phonetic to be compared
+    Output: sound found in both phonetic
+
+    Find common sounds in the two phonetics
+    '''
     return list(set(phonetic1) & set(phonetic2))
 
 def is_vowel(text):
@@ -97,7 +112,7 @@ def is_vowel(text):
     Returns true if a character is a vowel
     '''
     vowels = 'aeiouAEIOU'
-    return [True if any char in vowels for char in text]
+    return [True if char in vowels for char in text]
 
 def is_num(char = 'x'):
     '''
