@@ -50,12 +50,20 @@ def similarity_mat():
                 else:
                     score[ind1][ind2] = 0
             else:
-                score[ind1][ind2] = -1
+                score[ind1][ind2] = -11
     return score, syl_list1
 
-def syllable_list():
+# Update the input function
+def syllable_list(syllable_dict):
+    '''
+    Input: syllable dictionary with value
+    Output: A list which consists all the syllables
+
+    Unpacks the values into a single list
+    '''
+    syllable_dict = text.syllable_dict
     syl_list = []
-    for val in text.syllable_dict.itervalues():
+    for val in syllable_dict.itervalues():
         syl_list.extend(val)
     return syl_list
 
@@ -65,26 +73,36 @@ def score_size():
         size += len(word)
     return np.zeros((size,size))
 
-# CONTINUE FROM HERE
+
 def final_score(phonetic1, phonetic2, common_sounds):
+    '''
+    Input: 2 phonetic and list of common sounds between two phonetics
+    Output: Score based on phonetic sound
+
+    Calculates score for the common sounds
+    '''
     points = 0
     for sound in common_sounds:
         if len(sound) > 1:
             points += vowel_score(sound)
         else:
-            ind1 = phonetic1.index(sound)
-            ind2 = phonetic2.index(sound)
-            if (ind1 == ind2) and :
-                prefix = prefix_score()
+            points += consonant_score(phonetic1, phonetic2, sound)
 
-def consonant_score():
+
+def consonant_score(sound):
     '''
     Input: Consonant phone
     Output: Consonant phone score
 
     Assigns consonant phone score based on whether it is prefix or suffix
     '''
-    pass
+    points = 0
+    ind1 = phonetic1.index(sound)
+    ind2 = phonetic2.index(sound)
+    if ind1 < ind2:
+        return points += 1
+    else:
+        return points += 2
 
 def vowel_score(sound):
     '''
