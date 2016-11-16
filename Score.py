@@ -6,11 +6,12 @@ from itertools import combinations
 import copy
 
 text = PrepareText()
-text.read_tokenize_file('lyrics/forgot.md')
+text.read_tokenize_file('lyrics/mini.md')
 text.word_aphabet_dict()
 text.clean_syllables()
 
 def similarity_mat():
+    syllable_dict = text.syllable_dict
     syl_list1 = syllable_list(syllable_dict)
     syl_list2 = copy.deepcopy(syl_list1)
     score = score_size(syllable_dict)
@@ -24,7 +25,7 @@ def similarity_mat():
                 else:
                     score[ind1][ind2] = 0
             else:
-                score[ind1][ind2] = 0
+                score[ind1][ind2] = np.nan
     return score, syl_list1
 
 # Update the input function
@@ -35,17 +36,17 @@ def syllable_list(syllable_dict):
 
     Unpacks the values into a single list
     '''
-    syllable_dict = text.syllable_dict
+    syllable_dict = text.syllable_dict # UPDATE
     syl_list = []
     for val in syllable_dict.itervalues():
         syl_list.extend(val)
     return syl_list
 
 def score_size(syllable_dict):
-    size = 0
+    dim = 0
     for word in syllable_dict.itervalues():
-        size += len(word)
-    return np.zeros((size,size))
+        dim += len(word)
+    return np.zeros((dim,dim))
 
 
 def final_score(phonetic1, phonetic2, common_sounds):
@@ -71,10 +72,10 @@ def consonant_score(phonetic1, phonetic2, sound):
 
     Assigns consonant phone score based on whether it is prefix or suffix
     '''
-    sound_loc = prefix_check(phonetic1, phonetic2, sound)
-    if sound_loc == 1:
+    sound_pos = prefix_check(phonetic1, phonetic2, sound)
+    if sound_pos == 1:
         return 1
-    elif sound_loc == 2:
+    elif sound_pos == 2:
         return 2.5
     else:
         return 0
@@ -87,8 +88,8 @@ def prefix_check(phonetic1, phonetic2, sound):
     Checks whether a consonant is a prefix or suffix or didn't match either
     1 - prefix, 2 - suffix, 0 - mix-match
     '''
-    ph1_len = [len(sound) for sound in phonetic1]
-    ph2_len = [len(sound) for sound in phonetic2]
+    ph1_len = [len(cons) for cons in phonetic1]
+    ph2_len = [len(cons) for cons in phonetic2]
     ind1 = phonetic1.index(sound)
     ind2 = phonetic2.index(sound)
     if (ind1 < ph1_len.index(max(ph1_len))) and (ind2 < ph2_len.index(max(ph2_len))):

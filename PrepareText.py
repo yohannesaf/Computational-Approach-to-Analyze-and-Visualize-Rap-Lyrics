@@ -71,24 +71,8 @@ class PrepareText(object):
         return syl_list
 
 
-
-    # def word_aphabet_tuple(self):
-    #     '''
-    #     Input: 2 - d list of tokenied workds
-    #     Output: Tuple:
-    #         Keys - word
-    #         Value - phonetic representation of the key
-    #     '''
-    #     for line in self.lyrics_tokenized:
-    #         for  word in line:
-    #             try:
-    #                 self.aphabet_tuple.append((word, pr.phones_for_word(word)[0]))
-    #             except Exception as e:
-    #                 print e
-
-
-if __name__ == '__main__':
-    text = PrepareText()
-    text.read_tokenize_file('lyrics/mini.md')
-    text.word_aphabet_dict()
-    text.clean_syllables()
+# if __name__ == '__main__':
+#     text = PrepareText()
+#     text.read_tokenize_file('lyrics/mini.md')
+#     text.word_aphabet_dict()
+#     text.clean_syllables()
