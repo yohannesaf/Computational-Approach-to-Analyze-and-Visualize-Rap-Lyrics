@@ -5,7 +5,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from itertools import combinations
 import copy
 
-def ScoreMechanism(PrepareText):
+class ScoreMechanism(PrepareText):
 
     def __init__(self):
         self.score_matrix = self.score_mat()
