@@ -18,6 +18,7 @@ def similarity_mat():
     col = []
     row = []
     score = np.zeros((n,n))
+    print score.shape
     for word1 in text.syllable_dict.values():
         col_ind = 0
         for syl1 in word1:
