@@ -71,11 +71,13 @@ def consonant_score(phonetic1, phonetic2, sound):
 
     Assigns consonant phone score based on whether it is prefix or suffix
     '''
-    points = 0
-    if prefix_check(phonetic1, phonetic2, sound):
-        return points += 1
+    sound_loc = prefix_check(phonetic1, phonetic2, sound)
+    if sound_loc == 1:
+        return 1
+    elif sound_loc == 2:
+        return 2.5
     else:
-        return points += 2.5
+        return 0
 
 def prefix_check(phonetic1, phonetic2, sound):
     '''
@@ -89,9 +91,9 @@ def prefix_check(phonetic1, phonetic2, sound):
     ph2_len = [len(sound) for sound in phonetic2]
     ind1 = phonetic1.index(sound)
     ind2 = phonetic2.index(sound)
-    if (ind1 < max(ph1_len)) and (ind2 < max(ph2_len)):
+    if (ind1 < ph1_len.index(max(ph1_len))) and (ind2 < ph2_len.index(max(ph2_len))):
         return 1
-    elif (ind1 > max(ph1_len)) and (ind2 > max(ph2_len)):
+    elif (ind1 > ph2_len.index(max(ph1_len))) and (ind2 > ph2_len.index(max(ph2_len))):
         return 2
     else:
         return 0
