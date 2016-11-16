@@ -24,7 +24,7 @@ def similarity_mat():
                 else:
                     score[ind1][ind2] = 0
             else:
-                score[ind1][ind2] = np.nan
+                score[ind1][ind2] = 0
     return score, syl_list1
 
 # Update the input function
@@ -61,6 +61,7 @@ def final_score(phonetic1, phonetic2, common_sounds):
             points += vowel_score(sound)
         else:
             points += consonant_score(phonetic1, phonetic2, sound)
+    return points
 
 
 def consonant_score(phonetic1, phonetic2, sound):
@@ -71,13 +72,29 @@ def consonant_score(phonetic1, phonetic2, sound):
     Assigns consonant phone score based on whether it is prefix or suffix
     '''
     points = 0
+    if prefix_check(phonetic1, phonetic2, sound):
+        return points += 1
+    else:
+        return points += 2.5
+
+def prefix_check(phonetic1, phonetic2, sound):
+    '''
+    Input: Two phonetic sounds with common element sound
+    Output: Bool if the sound is prefix
+
+    Checks whether a consonant is a prefix or suffix or didn't match either
+    1 - prefix, 2 - suffix, 0 - mix-match
+    '''
+    ph1_len = [len(sound) for sound in phonetic1]
+    ph2_len = [len(sound) for sound in phonetic2]
     ind1 = phonetic1.index(sound)
     ind2 = phonetic2.index(sound)
-    if ind1 < ind2:
-        points += 1
+    if (ind1 < max(ph1_len)) and (ind2 < max(ph2_len)):
+        return 1
+    elif (ind1 > max(ph1_len)) and (ind2 > max(ph2_len)):
+        return 2
     else:
-        points += 2
-    return points
+        return 0
 
 def vowel_score(sound):
     '''
