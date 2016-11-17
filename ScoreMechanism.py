@@ -6,34 +6,35 @@ from itertools import combinations
 import copy
 
 class ScoreMechanism(object):
+    '''
+    Creates a list of columns headers and score matrix
+    '''
 
     def __init__(self, lyrics_tokenized, syllable_dict):
         self.lyrics_tokenized = lyrics_tokenized
         self.syllable_dict = syllable_dict
         self.col = []
-        self.score_matrix = []
+        self.adjacency_matrix = []
 
         self.syllable_list()
         self.similarity_mat()
 
 
     def similarity_mat(self):
-        # self.col = self.syllable_list()
-        # self.score_matrix = self.score_mat()
+        '''
+        Creates a 'score' matrix for each syllables
+        '''
         temp_score = self.score_shape()
         row = copy.deepcopy(self.col)
         for ind1, val1 in enumerate(self.col):
             for ind2, val2 in enumerate(row):
                 if val1 != val2:
                     common_sound = self.sound_intersect(val1, val2)
-                    if len(common_sound) > 0:
-                        points = self.final_score(val1, val2, common_sound)
-                        temp_score[ind1][ind2] = points
-                    else:
-                        temp_score[ind1][ind2] = 0
+                    points = self.final_score(val1, val2, common_sound)
+                    temp_score[ind1][ind2] = points
                 else:
-                    temp_score[ind1][ind2] = np.nan
-        self.score_matrix = temp_score
+                    temp_score[ind1][ind2] = 0
+        self.adjacency_matrix = temp_score
 
     def syllable_list(self):
         '''
@@ -98,7 +99,7 @@ class ScoreMechanism(object):
         ind2 = phonetic2.index(sound)
         if (ind1 < ph1_len.index(max(ph1_len))) and (ind2 < ph2_len.index(max(ph2_len))):
             return 1
-        elif (ind1 > ph2_len.index(max(ph1_len))) and (ind2 > ph2_len.index(max(ph2_len))):
+        elif (ind1 > ph1_len.index(max(ph1_len))) and (ind2 > ph2_len.index(max(ph2_len))):
             return 2
         else:
             return 0
@@ -140,5 +141,5 @@ class ScoreMechanism(object):
 
 
 if __name__ == '__main__':
-    text = PrepareText('lyrics/mini.md')
+    text = PrepareText('lyrics/forgot.md')
     score = ScoreMechanism(text.lyrics_tokenized, text.syllable_dict)

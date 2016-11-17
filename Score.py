@@ -94,7 +94,7 @@ def prefix_check(phonetic1, phonetic2, sound):
     ind2 = phonetic2.index(sound)
     if (ind1 < ph1_len.index(max(ph1_len))) and (ind2 < ph2_len.index(max(ph2_len))):
         return 1
-    elif (ind1 > ph2_len.index(max(ph1_len))) and (ind2 > ph2_len.index(max(ph2_len))):
+    elif (ind1 > ph1_len.index(max(ph1_len))) and (ind2 > ph2_len.index(max(ph2_len))):
         return 2
     else:
         return 0
