@@ -1,13 +1,3 @@
-alright, here we go, third take, real quick Ali
-
-Got me breathing with dragons
-I'll crack the egg in your basket, you bastard
-I'm Marilyn Manson with madness, now just imagine the magic
-I light to asses, don't ask for your favorite rapper
-
-Chuuch
-(He dead) I killed him (Amen) Bitch
-
 And this is rigamortis and it's gorgeous when you die
 Ali recorded and I'm Morpheus, the Matrix of my mind
 I'm out the orbit, you an orphan and a hairdresser combined
