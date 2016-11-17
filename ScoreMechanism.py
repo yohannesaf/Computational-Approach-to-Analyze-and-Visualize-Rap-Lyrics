@@ -5,14 +5,13 @@ from sklearn.feature_extraction.text import CountVectorizer
 from itertools import combinations
 import copy
 
-class ScoreMechanism(object):
+class ScoreMechanism(PrepareText):
     '''
     Creates a list of columns headers and score matrix
     '''
 
-    def __init__(self, lyrics_tokenized, syllable_dict):
-        self.lyrics_tokenized = lyrics_tokenized
-        self.syllable_dict = syllable_dict
+    def __init__(self, filepath):
+        PrepareText.__init__(self, filepath)
         self.col = []
         self.adjacency_matrix = []
 
@@ -141,5 +140,5 @@ class ScoreMechanism(object):
 
 
 if __name__ == '__main__':
-    text = PrepareText('lyrics/forgot.md')
-    score = ScoreMechanism(text.lyrics_tokenized, text.syllable_dict)
+
+    score = ScoreMechanism('lyrics/Jay Z.md')

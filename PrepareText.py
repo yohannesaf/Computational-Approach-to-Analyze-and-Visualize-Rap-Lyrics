@@ -12,6 +12,7 @@ class PrepareText(object):
     '''
 
     def __init__(self, filepath):
+        self.original = []
         self.lyrics_tokenized = []
         self.aphabet_dict = OrderedDict()
         self.syllable_dict = OrderedDict()
@@ -26,6 +27,7 @@ class PrepareText(object):
         '''
         with open(filepath) as f:
             for line in f.readlines():
+                self.original.append(line)
                 self.lyrics_tokenized.append(word_tokenize(line.lower().strip()))
 
     def word_aphabet_dict(self):
