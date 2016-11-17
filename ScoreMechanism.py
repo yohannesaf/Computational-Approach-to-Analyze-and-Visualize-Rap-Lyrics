@@ -141,4 +141,4 @@ class ScoreMechanism(PrepareText):
 
 if __name__ == '__main__':
 
-    score = ScoreMechanism('lyrics/Jay Z.md')
+    score = ScoreMechanism('lyrics/forgot.md')
