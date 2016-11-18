@@ -2,9 +2,10 @@ import pandas as pd
 import numpy as np
 import pronouncing as pr
 from nltk.tokenize import word_tokenize
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 from syllabify.syllabify import syllabify as syl
 from nltk.corpus import cmudict
+import copy
 
 
 class PrepareText(object):
@@ -16,10 +17,12 @@ class PrepareText(object):
         self.lyrics_tokenized = []
         self.aphabet_dict = OrderedDict()
         self.syllable_dict = OrderedDict()
+        self.wrapped_vowels = OrderedDict()
 
         self.read_tokenize_file(filepath)
         self.word_aphabet_dict()
-        self.clean_syllables()
+        self.clean_syllables_func()
+        self.wrapping_vowel_func()
 
     def read_tokenize_file(self, filepath):
         '''
@@ -43,13 +46,21 @@ class PrepareText(object):
                 except Exception as e:
                     print e
 
-    def clean_syllables(self):
+    def wrapping_vowel_func(self):
+        '''
+        Ensures that that a vowel is wrapped by consonants
+        '''
+        self.wrapped_vowels = copy.deepcopy(self.syllable_dict)
+        for key, val in self.syllable_dict.iteritems():
+            for ind, syl in enumerate(val[1:], 1):
+                self.wrapped_vowels[key][ind-1].append(syl[0])
+
+    def clean_syllables_func(self):
         '''
         Input: None
         Output: Ordered dictionary
                Keys - word
                Value - phonetic syllable replresentation of each word
-
         Calls the function constructing_syllables & clean up the syllables
         '''
         syl_temp = self.constructing_syllables()
