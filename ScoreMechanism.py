@@ -43,14 +43,15 @@ class ScoreMechanism(PrepareText):
 
         Unpacks the values into a single list
         '''
-        # for val in self.syllable_dict.itervalues():
-        for val in self.wrapped_vowels.itervalues():
+        # for alternative output, use line 47 instead of 48
+        for val in self.phonetic_syl_dict.itervalues():
+        # for val in self.wrapped_vowels.itervalues():
             self.col.extend(val)
 
 
     def score_shape(self):
         dim = 0
-        for word in self.syllable_dict.itervalues():
+        for word in self.phonetic_syl_dict.itervalues():
             dim += len(word)
         return np.zeros((dim,dim))
 

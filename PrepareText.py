@@ -5,6 +5,8 @@ from nltk.tokenize import word_tokenize
 from collections import OrderedDict, defaultdict
 from syllabify.syllabify import syllabify as syl
 from nltk.corpus import cmudict
+from hyphen import Hyphenator, dict_info
+from hyphen.dictools import *
 import copy
 
 
@@ -16,7 +18,7 @@ class PrepareText(object):
         self.original = []
         self.lyrics_tokenized = []
         self.aphabet_dict = OrderedDict()
-        self.syllable_dict = OrderedDict()
+        self.phonetic_syl_dict = OrderedDict()
         self.wrapped_vowels = OrderedDict()
 
         self.read_tokenize_file(filepath)
@@ -50,13 +52,10 @@ class PrepareText(object):
         '''
         Ensures that that a vowel is wrapped by consonants
         '''
-        self.wrapped_vowels = copy.deepcopy(self.syllable_dict)
-        # for key, val in self.syllable_dict.iteritems():
+        self.wrapped_vowels = copy.deepcopy(self.phonetic_syl_dict)
+        # for key, val in self.phonetic_syl_dict.iteritems():
         #     for ind, syl in enumerate(val[1:], 1):
         #         self.wrapped_vowels[key][ind-1].append(syl[0])
-        for key, val in self.syllable_dict.iteritems():
-            for ind, syl in enumerate(val[1:], 1):
-                self.wrapped_vowels[key][ind-1].append(syl[0])
 
     def clean_syllables_func(self):
         '''
@@ -74,13 +73,13 @@ class PrepareText(object):
                 for ph in syl:
                     sound += ph
                 word_sounds.append(sound)
-            self.syllable_dict.update({key:word_sounds})
+            self.phonetic_syl_dict.update({key:word_sounds})
 
     def constructing_syllables(self):
         '''
         Output: Ordered dictionary
                Keys - word
-               Value - phonetic syllable replresentation of each word
+               Value - phonetic syllable resentation of each word
         '''
         syl_list = OrderedDict()
         for key, val in self.aphabet_dict.iteritems():
