@@ -29,8 +29,9 @@ class ScoreMechanism(PrepareText):
             for ind2, val2 in enumerate(row):
                 if val1 != val2:
                     common_sound = self.sound_intersect(val1, val2)
-                    points = self.final_score(val1, val2, common_sound)
-                    temp_score[ind1][ind2] = points
+                    if len(common_sound) > 1:
+                        points = self.final_score(val1, val2, common_sound)
+                        temp_score[ind1][ind2] = points
                 else:
                     temp_score[ind1][ind2] = 0
         self.adjacency_matrix = temp_score
@@ -42,7 +43,8 @@ class ScoreMechanism(PrepareText):
 
         Unpacks the values into a single list
         '''
-        for val in self.syllable_dict.itervalues():
+        # for val in self.syllable_dict.itervalues():
+        for val in self.wrapped_vowels.itervalues():
             self.col.extend(val)
 
 
@@ -80,7 +82,7 @@ class ScoreMechanism(PrepareText):
         if sound_pos == 1:
             return 1
         elif sound_pos == 2:
-            return 2.5
+            return 1.5
         else:
             return 0
 
@@ -97,9 +99,9 @@ class ScoreMechanism(PrepareText):
         ind1 = phonetic1.index(sound)
         ind2 = phonetic2.index(sound)
         if (ind1 < ph1_len.index(max(ph1_len))) and (ind2 < ph2_len.index(max(ph2_len))):
-            return 1
+            return .5
         elif (ind1 > ph1_len.index(max(ph1_len))) and (ind2 > ph2_len.index(max(ph2_len))):
-            return 2
+            return .5
         else:
             return 0
 
@@ -111,9 +113,9 @@ class ScoreMechanism(PrepareText):
         Assigns score to a common phone vowel bewteen 2 words based on their stress.
         '''
         if sound[-1] > 0:
-            return len(sound) * 3
+            return 2.5
         else:
-            return len(sound) + 2
+            return 1.6
 
     def sound_intersect(self, phonetic1, phonetic2):
         '''
@@ -141,4 +143,4 @@ class ScoreMechanism(PrepareText):
 
 if __name__ == '__main__':
 
-    score = ScoreMechanism('lyrics/forgot.md')
+    score = ScoreMechanism('lyrics/Jay Z.md')

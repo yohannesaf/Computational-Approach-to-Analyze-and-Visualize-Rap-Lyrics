@@ -51,6 +51,9 @@ class PrepareText(object):
         Ensures that that a vowel is wrapped by consonants
         '''
         self.wrapped_vowels = copy.deepcopy(self.syllable_dict)
+        # for key, val in self.syllable_dict.iteritems():
+        #     for ind, syl in enumerate(val[1:], 1):
+        #         self.wrapped_vowels[key][ind-1].append(syl[0])
         for key, val in self.syllable_dict.iteritems():
             for ind, syl in enumerate(val[1:], 1):
                 self.wrapped_vowels[key][ind-1].append(syl[0])
