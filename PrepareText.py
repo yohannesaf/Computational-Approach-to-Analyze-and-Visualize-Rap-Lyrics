@@ -21,11 +21,15 @@ class PrepareText(object):
         self.word_syl_dict = OrderedDict()
         self.phonetic_syl_dict = OrderedDict()
         self.wrapped_vowels = OrderedDict()
+        self.phone_syl_col = []
+        self.word_syl_col = []
 
         self.read_tokenize_file(filepath)
-        self.word_aphabet_dict()
+        self.phonic_dict_func()
         self.clean_syllables_func()
         self.wrapping_vowel_func()
+        self.phonetic_syl_list_func()
+        self.word_syl_list_func()
 
     def read_tokenize_file(self, filepath):
         '''
@@ -36,7 +40,7 @@ class PrepareText(object):
                 self.original.append(line)
                 self.lyrics_tokenized.append(word_tokenize(line.lower().strip()))
 
-    def word_aphabet_dict(self):
+    def phonic_dict_func(self):
         '''
         Output: Ordered dictionary:
             Keys - word
@@ -47,7 +51,11 @@ class PrepareText(object):
             for word in line:
                 try:
                     self.aphabet_dict.update({word:pr.phones_for_word(word)[0]})
-                    self.word_syl_dict.update({word:h_en.syllables(unicode(word))})
+                    temp = h_en.syllables(unicode(word))
+                    if len(temp) > 0:
+                        self.word_syl_dict.update({word:temp})
+                    else:
+                        self.word_syl_dict.update({word:[unicode(word)]})
                 except Exception as e:
                     print e
 
@@ -91,6 +99,25 @@ class PrepareText(object):
             syl_list.update({key:syl_of_key})
         return syl_list
 
+    def phonetic_syl_list_func(self):
+        '''
+        Input: syllable phonetic dictionary with value
+        Output: A list which consists all the syllables
+
+        Unpacks the values into a single list
+        '''
+        for phone in self.phonetic_syl_dict.itervalues():
+            self.phone_syl_col.extend(phone)
+
+    def word_syl_list_func(self):
+        '''
+        Input: syllable word dictionary with value
+        Output: A list which consists all the syllables
+
+        Unpacks the values into a single list
+        '''
+        for syl in self.word_syl_dict.itervalues():
+            self.word_syl_col.extend(syl)
 
 if __name__ == '__main__':
     text = PrepareText('lyrics/forgot.md')

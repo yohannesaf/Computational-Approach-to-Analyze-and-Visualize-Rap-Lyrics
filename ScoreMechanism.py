@@ -12,10 +12,8 @@ class ScoreMechanism(PrepareText):
 
     def __init__(self, filepath):
         PrepareText.__init__(self, filepath)
-        self.col = []
         self.adjacency_matrix = []
 
-        self.syllable_list()
         self.similarity_mat()
 
 
@@ -24,8 +22,8 @@ class ScoreMechanism(PrepareText):
         Creates a 'score' matrix for each syllables
         '''
         temp_score = self.score_shape()
-        row = copy.deepcopy(self.col)
-        for ind1, val1 in enumerate(self.col):
+        row = copy.deepcopy(self.phone_syl_col)
+        for ind1, val1 in enumerate(self.phone_syl_col):
             for ind2, val2 in enumerate(row):
                 if val1 != val2:
                     common_sound = self.sound_intersect(val1, val2)
@@ -35,18 +33,6 @@ class ScoreMechanism(PrepareText):
                 else:
                     temp_score[ind1][ind2] = 0
         self.adjacency_matrix = temp_score
-
-    def syllable_list(self):
-        '''
-        Input: syllable dictionary with value
-        Output: A list which consists all the syllables
-
-        Unpacks the values into a single list
-        '''
-        # for alternative output, use line 47 instead of 48
-        for val in self.phonetic_syl_dict.itervalues():
-        # for val in self.wrapped_vowels.itervalues():
-            self.col.extend(val)
 
 
     def score_shape(self):
