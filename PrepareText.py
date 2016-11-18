@@ -18,6 +18,7 @@ class PrepareText(object):
         self.original = []
         self.lyrics_tokenized = []
         self.aphabet_dict = OrderedDict()
+        self.word_syl_dict = OrderedDict()
         self.phonetic_syl_dict = OrderedDict()
         self.wrapped_vowels = OrderedDict()
 
@@ -41,10 +42,12 @@ class PrepareText(object):
             Keys - word
             Value - phonetic representation of the key
         '''
+        h_en = Hyphenator('en_US')
         for line in self.lyrics_tokenized:
             for word in line:
                 try:
                     self.aphabet_dict.update({word:pr.phones_for_word(word)[0]})
+                    self.word_syl_dict.update({word:h_en.syllables(unicode(word))})
                 except Exception as e:
                     print e
 
@@ -53,9 +56,10 @@ class PrepareText(object):
         Ensures that that a vowel is wrapped by consonants
         '''
         self.wrapped_vowels = copy.deepcopy(self.phonetic_syl_dict)
-        # for key, val in self.phonetic_syl_dict.iteritems():
-        #     for ind, syl in enumerate(val[1:], 1):
-        #         self.wrapped_vowels[key][ind-1].append(syl[0])
+        for key, val in self.phonetic_syl_dict.iteritems():
+            for ind, syl in enumerate(val[1:], 1):
+                if self.wrapped_vowels[key][ind-1][-1][-1] == unicode(1):
+                    self.wrapped_vowels[key][ind-1].append(syl[0])
 
     def clean_syllables_func(self):
         '''
@@ -89,4 +93,4 @@ class PrepareText(object):
 
 
 if __name__ == '__main__':
-    text = PrepareText('lyrics/mini.md')
+    text = PrepareText('lyrics/forgot.md')
