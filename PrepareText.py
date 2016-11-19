@@ -7,6 +7,7 @@ from syllabify.syllabify import syllabify as syl
 from nltk.corpus import cmudict
 from hyphen import Hyphenator, dict_info
 from hyphen.dictools import *
+from finnsyll import FinnSyll
 import copy
 
 
@@ -42,20 +43,23 @@ class PrepareText(object):
 
     def phonic_dict_func(self):
         '''
-        Output: Ordered dictionary:
+        Output: Ordered dictionary
             Keys - word
             Value - phonetic representation of the key
         '''
-        h_en = Hyphenator('en_US')
+        # h_en = Hyphenator('en_US') # this almost works
+        f = FinnSyll() #explore this methond as well.
         for line in self.lyrics_tokenized:
             for word in line:
                 try:
                     self.aphabet_dict.update({word:pr.phones_for_word(word)[0]})
-                    temp = h_en.syllables(unicode(word))
-                    if len(temp) > 0:
-                        self.word_syl_dict.update({word:temp})
-                    else:
-                        self.word_syl_dict.update({word:[unicode(word)]})
+                    temp = f.syllabify(word)
+                    self.word_syl_dict.update({word:f.syllabify(word)[0].split('.')})
+                    # temp = h_en.syllables(unicode(word))
+                    # if len(temp) > 0:
+                    #     self.word_syl_dict.update({word:temp})
+                    # else:
+                    #     self.word_syl_dict.update({word:[unicode(word)]})
                 except Exception as e:
                     print e
 
