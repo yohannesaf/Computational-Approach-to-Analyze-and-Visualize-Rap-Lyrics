@@ -130,4 +130,4 @@ class ScoreMechanism(PrepareText):
 
 if __name__ == '__main__':
 
-    score = ScoreMechanism('lyrics/text.md')
+    score = ScoreMechanism('lyrics/forgot.md')

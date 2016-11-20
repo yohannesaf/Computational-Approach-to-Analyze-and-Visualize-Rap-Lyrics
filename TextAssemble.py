@@ -8,7 +8,7 @@ from hyphen import Hyphenator, dict_info
 import pandas as pd
 import numpy as np
 
-score = ScoreMechanism('lyrics/forgot.md')
+score = ScoreMechanism('lyrics/text.md')
 
 
 M_output, clusters = mcl(score.adjacency_matrix,
@@ -42,14 +42,3 @@ def cluster_val_inversion(clusters):
 
 test1 = cluster_val_inversion(clusters)
 test2 = node_name_assignment(test1)
-# print test2
-
-# f = FinnSyll()
-# h_en = Hyphenator('en_US')
-# text = 'forgotten spot in the caribbean my friend, you understand'
-# text_token = text.split()
-# a, b, c = OrderedDict(), OrderedDict(), OrderedDict()
-# for word in text_token:
-#     a.update({word:f.syllabify(word)})
-#     # b.update({word:h_en.syllabify(pr.phones_for_word(word)[0]}))
-#     c.update(h_en.syllables(unicode(word[0])))

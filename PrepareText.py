@@ -30,7 +30,7 @@ class PrepareText(object):
         self.clean_syllables_func()
         self.wrapping_vowel_func()
         self.phonetic_syl_list_func()
-        self.word_syl_list_func()
+        self.syl_update_func()
 
     def read_tokenize_file(self, filepath):
         '''
@@ -47,19 +47,19 @@ class PrepareText(object):
             Keys - word
             Value - phonetic representation of the key
         '''
-        # h_en = Hyphenator('en_US') # this almost works
+        h_en = Hyphenator('en_US') # this almost works
         f = FinnSyll() #explore this methond as well.
         for line in self.lyrics_tokenized:
             for word in line:
                 try:
                     self.aphabet_dict.update({word:pr.phones_for_word(word)[0]})
                     temp = f.syllabify(word)
-                    self.word_syl_dict.update({word:f.syllabify(word)[0].split('.')})
-                    # temp = h_en.syllables(unicode(word))
-                    # if len(temp) > 0:
-                    #     self.word_syl_dict.update({word:temp})
-                    # else:
-                    #     self.word_syl_dict.update({word:[unicode(word)]})
+                    # self.word_syl_dict.update({word:f.syllabify(word)[0].split('.')})
+                    temp = h_en.syllables(unicode(word))
+                    if len(temp) > 0:
+                        self.word_syl_dict.update({word:temp})
+                    else:
+                        self.word_syl_dict.update({word:[unicode(word)]})
                 except Exception as e:
                     print e
 
@@ -122,6 +122,16 @@ class PrepareText(object):
         '''
         for syl in self.word_syl_dict.itervalues():
             self.word_syl_col.extend(syl)
+
+    def syl_update_func(self):
+        self.word_syl_list_func()
+        temp = self.word_syl_dict.copy()
+        f = FinnSyll()
+        for (w1, s1), (p1, s2) in zip(self.phonetic_syl_dict.items(), temp.items()):
+            if len(s1) != len(s2):
+                self.word_syl_dict.update({w1:f.syllabify(w1)[0].split('.')})
+                # self.word_syl_dict.update({word:f.syllabify(word)[0].split('.')})
+        pass
 
 if __name__ == '__main__':
     text = PrepareText('lyrics/forgot.md')
