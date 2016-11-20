@@ -8,37 +8,50 @@ from hyphen import Hyphenator, dict_info
 import pandas as pd
 import numpy as np
 
-score = ScoreMechanism('lyrics/text.md')
 
-
-M_output, clusters = mcl(score.adjacency_matrix,
-                  expand_factor = 7,
-                  inflate_factor = 3,
-                  max_loop = 1000,
-               #  mult_factor = <mult_factor>
-                  )
-
-# print score.phone_syl_col
-def node_name_assignment(clusters):
-    syllable_clusters = OrderedDict()
-    for syl, cl in clusters.iteritems():
-        syllable_clusters.update({tuple(score.phone_syl_col[syl]):cl})
-    return syllable_clusters
-
-def cluster_val_inversion(clusters):
+class TextAssemble(ScoreMechanism):
     '''
-    Assigns the value to be the key, and cluster for the values.
-    nodes assigned to a unique clusters are agregated together
     '''
-    temp = defaultdict()
-    for cl, syl in clusters.iteritems():
-        if len(syl) > 1:
-            for sound in syl:
-                temp.update({sound:cl})
-        else:
-            temp.update({syl[0]:99})
-    return temp
+
+    def __init__(self, filepath):
+        # PrepareText.__init__(self, filepath)
+        ScoreMechanism.__init__(self, filepath)
+        self.M_output = None
+        self.clusters = defaultdict()
+        self.clustered_syl = OrderedDict()
+
+        self.mcl_cluster()
+        self.phone_name_assignment()
+
+    def mcl_cluster(self):
+        self.M_output, self.clusters = mcl(self.adjacency_matrix,
+                          expand_factor = 7,
+                          inflate_factor = 3,
+                          max_loop = 1000,
+                          mult_factor = 4
+                          )
+
+    # print score.phone_syl_col
+    def phone_name_assignment(self):
+        temp = self.cluster_val_inversion()
+        for syl, cl in temp.iteritems():
+            self.clustered_syl.update({self.word_syl_col[syl]:cl})
+
+    def cluster_val_inversion(self):
+        '''
+        Assigns the value to be the key, and cluster for the values.
+        nodes assigned to a unique clusters are agregated together
+        '''
+        temp = defaultdict()
+        for cl, syl in self.clusters.iteritems():
+            if len(syl) > 1:
+                for sound in syl:
+                    temp.update({sound:cl})
+            else:
+                temp.update({syl[0]:99})
+        return temp
 
 
-test1 = cluster_val_inversion(clusters)
-test2 = node_name_assignment(test1)
+if __name__ == '__main__':
+
+    text = TextAssemble('lyrics/mini.md')
