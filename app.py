@@ -10,6 +10,7 @@ def index():
         <!DOCTYPE html>
         <html>
             <head>
+                <div align="center">
                 <meta charset="utf-8">
                 <title>Page Title</title>
             </head>
@@ -17,15 +18,19 @@ def index():
             <!-- page content -->
             <h1>Rap Lyric Visualization</h1>
 
+            <div align="center">
             <form action="/test" method='POST' >
-
             <textarea
-            name="user_input_lyrics"
-            style="width:50%; height:90px; padding:2%">
-            Copy and paste rap lyrics
+                name="user_input_lyrics"
+                style="width:50%; height:90px">
+                Copy and paste rap lyrics
             </textarea>
-            <input type="submit" value="Visualize"/>
-            <p> Click the "Visualize" to visualize rap lyrics.</p>
+            <br>
+                <input align="center" type="submit" value="Inspect" />
+            </br>
+            <p>
+                Click the "Visualize" to analyze rap lyrics
+            </p>
             </form>
 
           </body>
