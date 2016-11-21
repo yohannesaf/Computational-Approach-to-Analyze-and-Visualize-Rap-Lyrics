@@ -43,6 +43,11 @@ class PrepareText(object):
                 self.original.append(line)
                 self.lyrics_tokenized.append(word_tokenize(line.lower().strip()))
 
+        # with open(filepath) as f:
+        #     for line in f.readlines():
+        #         self.original.append(line)
+        #         self.lyrics_tokenized.append(word_tokenize(line.lower().strip()))
+
     def word_phonic_dict_func(self):
         '''
         Output: Ordered dictionary

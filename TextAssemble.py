@@ -15,7 +15,6 @@ class TextAssemble(ScoreMechanism):
     '''
 
     def __init__(self, filepath):
-        # PrepareText.__init__(self, filepath)
         ScoreMechanism.__init__(self, filepath)
         self.M_output = None
         self.clusters = defaultdict()
@@ -96,4 +95,4 @@ class TextAssemble(ScoreMechanism):
 
 if __name__ == '__main__':
 
-    text = TextAssemble('lyrics/forgot.md')
+    text = TextAssemble('lyrics/mini.md')
