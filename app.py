@@ -1,6 +1,8 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 # from mcl_clustering import mcl
 from TextAssemble import TextAssemble
+from ScoreMechanism import ScoreMechanism
+from PrepareText import PrepareText
 app = Flask(__name__)
 
 # home page
@@ -22,11 +24,11 @@ def index():
             <form action="/test" method='POST' >
             <textarea
                 name="user_input_lyrics"
-                style="width:50%; height:90px">
+                rows = "7" cols = "80" wrap="soft">
                 Copy and paste rap lyrics
             </textarea>
             <br>
-                <input align="center" type="submit" value="Inspect" />
+                <input type="submit" value="Visualize" />
             </br>
             <p>
                 Click the "Visualize" to analyze rap lyrics
@@ -40,10 +42,9 @@ def index():
 
 @app.route('/test', methods=['POST'] )
 def test():
-    user_input = str(request.form['user_input_lyrics']).upper()
-    # text = TextAssemble(text)
-    # check =
-    return user_input
+    user_input = str(request.form['user_input_lyrics'])
+    text = TextAssemble(user_input)
+    return text.original
 
 
 
