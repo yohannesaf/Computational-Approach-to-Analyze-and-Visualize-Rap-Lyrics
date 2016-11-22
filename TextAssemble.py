@@ -95,4 +95,4 @@ class TextAssemble(ScoreMechanism):
 
 if __name__ == '__main__':
 
-    text = TextAssemble('lyrics/mini.md')
+    text = TextAssemble('lyrics/forgot.md')
