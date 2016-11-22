@@ -90,7 +90,7 @@ class ScoreMechanism(PrepareText):
         elif (ind1 > ph1_len.index(max(ph1_len))) and (ind2 > ph2_len.index(max(ph2_len))):
             return .5
         else:
-            return 0
+            return 3
 
     def vowel_score(self, sound):
         '''
@@ -130,4 +130,4 @@ class ScoreMechanism(PrepareText):
 
 if __name__ == '__main__':
 
-    score = ScoreMechanism('lyrics/mini.md')
+    score = ScoreMechanism('lyrics/forgot.md')
