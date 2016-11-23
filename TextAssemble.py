@@ -8,7 +8,7 @@ from hyphen import Hyphenator, dict_info
 from colorama import *
 import pandas as pd
 import numpy as np
-
+import sys
 
 class TextAssemble(ScoreMechanism):
     '''
@@ -23,7 +23,7 @@ class TextAssemble(ScoreMechanism):
         self.grouped_syl = OrderedDict()
         self.display_syl = []
         self.colored_syl = []
-        self.output_text = ''
+        self.output_text = []
 
         self.mcl_cluster()
         self.word_name_assignment()
@@ -112,21 +112,14 @@ class TextAssemble(ScoreMechanism):
             self.colored_syl.append(word_color)
 
     '''
-    FIX THIS FUNCTION
+    FIXed!!! THIS FUNCTION
     '''
 
     def print_text(self):
-        temp_text = ''
+        temp_text = []
         for line in self.colored_syl:
-            line_text = ''
-            for word, syl_cl in line:
-                word_text = ''
-                for syl in syl_cl:
-                    word_text += "".join(syl)
-                line_text += word_text + ' '
-            temp_text += line_text + '\n'
-            self.output_text += temp+text
-        print self.output_text
+            line_text = [''.join(syl_cl) for _, syl_cl in line]
+            print ' '.join(line_text)
 
 
 
