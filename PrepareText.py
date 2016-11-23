@@ -16,7 +16,7 @@ class PrepareText(object):
     '''
 
     def __init__(self, filepath):
-        self.original = []
+        self.root = []
         self.lyrics_tokenized = []
         self.arpabet_dict = OrderedDict()
         self.word_syl_dict = OrderedDict()
@@ -38,14 +38,14 @@ class PrepareText(object):
         '''
         Returns a lists of tokenize lyrics
         '''
-        # self.original = filepath.split('\n')
-        # for line in self.original:
+        # self.root = filepath.split('\n')
+        # for line in self.root:
         #     self.lyrics_tokenized.append(line.split())
 
         with open(filepath) as f:
             for line in f.readlines():
-                self.original.append(line)
-                self.lyrics_tokenized.append(line.replace(',','').lower().split())
+                self.root.append(line)
+                self.lyrics_tokenized.append(line.replace(',','').replace('?','').lower().split())
 
     def word_phonic_dict_func(self):
         '''
@@ -143,4 +143,4 @@ class PrepareText(object):
 
 
 if __name__ == '__main__':
-    prep = PrepareText('lyrics/mini.md')
+    prep = PrepareText('lyrics/shade_shiest.md')

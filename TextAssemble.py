@@ -49,8 +49,9 @@ class TextAssemble(ScoreMechanism):
         '''
         temp = self.cluster_val_inversion()
         self.unique_clusters = list(set(temp.values()))
-        for syl, cl in temp.iteritems():
-            self.clustered_syl.append([self.word_syl_col[syl], cl])
+        [self.clustered_syl.append([self.word_syl_col[syl], cl]) for  syl, cl in temp.iteritems()]
+        # for syl, cl in temp.iteritems():
+        #     self.clustered_syl.append([self.word_syl_col[syl], cl])
 
     def cluster_val_inversion(self):
         '''
@@ -59,15 +60,16 @@ class TextAssemble(ScoreMechanism):
         '''
 
         temp = defaultdict()
-        for cl, syl in self.clusters.iteritems():
-            if len(syl) > 1:
-                for sound in syl:
-                    temp.update({sound:cl})
-            else:
-                temp.update({syl[0]:99})
+        [temp.update({sound:cl}) if len(syl) > 1 else temp.update({syl[0]:99}) \
+            for cl, syl in self.clusters.iteritems() for sound in syl ]
         return temp
+        # for cl, syl in self.clusters.iteritems():
+        #     if len(syl) > 1:
+        #         [temp.update({sound:cl}) for sound in syl]
+        #     else:
+        #         temp.update({syl[0]:99})
+        # return temp
 
-    # Not working at the moment
     def syl_combine(self):
         word_ind = 0
         syl_counts = self.word_syl_count()
@@ -89,14 +91,16 @@ class TextAssemble(ScoreMechanism):
         '''
         for line in self.lyrics_tokenized:
             temp = []
-            for word in line:
-                temp.append((word, self.grouped_syl[word]))
+            [temp.append((word, self.grouped_syl[word])) for word in line]
             self.display_syl.append(temp)
+            # for word in line:
+            #     temp.append((word, self.grouped_syl[word]))
+            # self.display_syl.append(temp)
 
     def color_assignment(self):
         black = Fore.BLACK
         colors = [Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA]
-        num_clusters = len(self.unique_clusters) - 1
+        # num_clusters = len(self.unique_clusters) - 1
 
         for line in self.display_syl:
             word_color = []
@@ -111,9 +115,6 @@ class TextAssemble(ScoreMechanism):
                 word_color.append([word, syl_color])
             self.colored_syl.append(word_color)
 
-    '''
-    FIXed!!! THIS FUNCTION
-    '''
 
     def print_text(self):
         temp_text = []
@@ -125,4 +126,4 @@ class TextAssemble(ScoreMechanism):
 
 if __name__ == '__main__':
 
-    text = TextAssemble('lyrics/forgot.md')
+    text = TextAssemble('lyrics/mini.md')
