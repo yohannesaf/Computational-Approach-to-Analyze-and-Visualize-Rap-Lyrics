@@ -127,8 +127,9 @@ class PrepareText(object):
 
         Unpacks the values into a single list
         '''
-        for phone in self.wrapped_vowels.itervalues():
-            self.phone_syl_col.extend(phone)
+        [self.phone_syl_col.extend(phone) for phone in self.wrapped_vowels.itervalues()]
+        # for phone in self.wrapped_vowels.itervalues():
+        #     self.phone_syl_col.extend(phone)
 
     def word_syl_list_func(self):
         '''
@@ -137,8 +138,9 @@ class PrepareText(object):
 
         Unpacks the values into a single list
         '''
-        for syl in self.word_syl_dict.itervalues():
-            self.word_syl_col.extend(syl)
+        [self.word_syl_col.extend(syl) for syl in self.word_syl_dict.itervalues()]
+        # for syl in self.word_syl_dict.itervalues():
+        #     self.word_syl_col.extend(syl)
 
 
 
