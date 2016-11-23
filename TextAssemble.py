@@ -23,12 +23,14 @@ class TextAssemble(ScoreMechanism):
         self.grouped_syl = OrderedDict()
         self.display_syl = []
         self.colored_syl = []
+        self.output_text = ''
 
         self.mcl_cluster()
         self.word_name_assignment()
         self.syl_combine()
         self.lyric_reconstruction()
         self.color_assignment()
+        self.print_text()
 
     def mcl_cluster(self):
         '''
@@ -108,6 +110,24 @@ class TextAssemble(ScoreMechanism):
                         syl_color.append(colors[color_ind] + syl)
                 word_color.append([word, syl_color])
             self.colored_syl.append(word_color)
+
+    '''
+    FIX THIS FUNCTION
+    '''
+
+    def print_text(self):
+        temp_text = ''
+        for line in self.colored_syl:
+            line_text = ''
+            for word, syl_cl in line:
+                word_text = ''
+                for syl in syl_cl:
+                    word_text += "".join(syl)
+                line_text += word_text + ' '
+            temp_text += line_text + '\n'
+            self.output_text += temp+text
+        print self.output_text
+
 
 
 if __name__ == '__main__':
