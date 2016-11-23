@@ -76,7 +76,7 @@ class PrepareText(object):
                 n = max(leng)
                 temp_syl = s1[leng.index(max(leng))]
                 s1.remove(temp_syl)
-                replace_syl = [[temp_syl[:(n/2)]], [temp_syl[(n/2):]] ]
+                replace_syl = [temp_syl[:(n/2)], temp_syl[(n/2):]]
                 s1.extend(replace_syl)
                 self.word_syl_dict.update({w1:s1})
 

@@ -21,11 +21,13 @@ class TextAssemble(ScoreMechanism):
         self.unique_clusters = 0
         self.clustered_syl = []
         self.grouped_syl = OrderedDict()
-        self.colored_syl = OrderedDict()
+        self.display_syl = []
+        self.colored_syl = []
 
         self.mcl_cluster()
         self.word_name_assignment()
         self.syl_combine()
+        self.lyric_reconstruction()
         self.color_assignment()
 
     def mcl_cluster(self):
@@ -53,6 +55,7 @@ class TextAssemble(ScoreMechanism):
         Assigns the value to be the key, and cluster for the values.
         nodes assigned to a unique clusters are agregated together
         '''
+
         temp = defaultdict()
         for cl, syl in self.clusters.iteritems():
             if len(syl) > 1:
@@ -78,20 +81,34 @@ class TextAssemble(ScoreMechanism):
             syl_counts.update({key:len(val)})
         return syl_counts
 
+    def lyric_reconstruction(self):
+        '''
+        Appends non-unique keys back for text print.
+        '''
+        for line in self.lyrics_tokenized:
+            temp = []
+            for word in line:
+                temp.append((word, self.grouped_syl[word]))
+            self.display_syl.append(temp)
+
     def color_assignment(self):
         black = Fore.BLACK
-        colors = [Fore.RED, Fore.BLUE, Fore.CYAN, Fore.GREEN, Fore.YELLOW, Fore.MAGENTA]
-        num_clusters = len(colors) + 1
-        for key, syl in self.grouped_syl.iteritems():
-            temp = []
-            for sound in syl:
-                ph, cl = sound[0], sound[1]
-                if cl == 99:
-                    temp.append(black + ph)
-                else:
-                    color_ind = self.unique_clusters.index(cl)
-                    temp.append(colors[color_ind] + ph)
-            self.colored_syl.update({key:temp})
+        colors = [Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA]
+        num_clusters = len(self.unique_clusters) - 1
+
+        for line in self.display_syl:
+            word_color = []
+            for word, syl_cl in line:
+                syl_color = []
+                for syl, cl in syl_cl:
+                    if cl == 99:
+                        syl_color.append(black + syl)
+                    else:
+                        color_ind = self.unique_clusters.index(cl)
+                        syl_color.append(colors[color_ind] + syl)
+                word_color.append([word, syl_color])
+            self.colored_syl.append(word_color)
+
 
 if __name__ == '__main__':
 

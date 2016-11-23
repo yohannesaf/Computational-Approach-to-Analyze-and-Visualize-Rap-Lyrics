@@ -117,7 +117,7 @@ class ScoreMechanism(PrepareText):
         '''
         Returns true if a character is a vowel
         '''
-        vowels = 'aeiouAEIOU'
+        vowels = 'aeiouyAEIOUY'
         return [True if char in vowels else False for char in text]
 
     def is_num(self, char):
