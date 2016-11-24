@@ -113,4 +113,4 @@ class TextAssemble(ScoreMechanism):
 
 if __name__ == '__main__':
 
-    text = TextAssemble('lyrics/hamilton_test.md')
+    text = TextAssemble('lyrics/shade_shiest.md')

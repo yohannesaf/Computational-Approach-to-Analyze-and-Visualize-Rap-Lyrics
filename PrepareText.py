@@ -47,8 +47,7 @@ class PrepareText(object):
         with open(filepath) as f:
             for line in f.readlines():
                 self.root.append(line)
-                temp = regex.sub(ur"((?!-)\p{P})+", "", line)
-                self.lyrics_tokenized.append(temp.lower().split())
+                self.lyrics_tokenized.append(line.replace(',','').replace('?','').lower().split())
 
     def tokenize_lyric_clean_up(self):
         lines = []
@@ -82,36 +81,32 @@ class PrepareText(object):
     def word_syl_dict_update_func(self):
         word_syl_copy = self.word_syl_dict.copy()
         for (w1, s1), (p1, s2) in zip(word_syl_copy.items(), self.phonetic_syl_dict.items()):
-            if len(s1) < len(s2):
+            while len(s1) < len(s2):
+            # if len(s1) != len(s2):
                 leng = [len(sound) for sound in s1]
                 n = max(leng)
                 temp_syl = s1[leng.index(max(leng))]
+                split1, split2 = self.first_vowel_split(temp_syl)
                 s1.remove(temp_syl)
-                replace_syl = [temp_syl[:(n/2)], temp_syl[(n/2):]]
-                s1.extend(replace_syl)
+                s1.extend([split1, split2])
                 self.word_syl_dict.update({w1:s1})
 
-    # def word_syl_dict_update_func(self):
-    #     word_syl_copy = self.word_syl_dict.copy()
-    #     for (w1, s1), (p1, s2) in zip(word_syl_copy.items(), self.phonetic_syl_dict.items()):
-    #         if len(s1) < len(s2):
-    #             leng = [len(sound) for sound in s1]
-    #             n = max(leng)
-    #             temp_syl = s1[leng.index(max(leng))]
-    #             s1.remove(temp_syl)
-    #             replace_syl = [temp_syl[:(n/2)], temp_syl[(n/2):]]
-    #             s1.extend(replace_syl)
-    #             self.word_syl_dict.update({w1:s1})
+    def first_vowel_split(self, word):
+        '''
+        Additional split of sylable to match the number of phonetic syl
+        '''
+        index = self.first_vowel_index(word)
+        index += 1
+        return word[:index], word[index:]
 
-            # if len(s1) < len(s2):
-            #     leng = [len(sound) for sound in s1]
-            #     n = max(leng)
-            #     ind = leng.index(n)
-            #     temp_syl = s1[leng.index(max(leng))]
-            #     s1.remove(temp_syl)
-            #     replace_syl = [temp_syl[:(n/2)], temp_syl[(n/2):]]
-            #     s1.extend(replace_syl)
-            #     self.word_syl_dict.update({w1:s1})
+    def first_vowel_index(self, word):
+        '''
+        Returns the index of the first vowel occurance
+        '''
+        for index, char in enumerate(word):
+            if char in 'aeiouy':
+                return index
+
 
     def wrapping_vowel_func(self):
         '''
@@ -180,4 +175,4 @@ class PrepareText(object):
 
 if __name__ == '__main__':
 
-    prep = PrepareText('lyrics/hamilton_test.md')
+    prep = PrepareText('lyrics/shade_shiest.md')
