@@ -85,12 +85,25 @@ class TextAssemble(ScoreMechanism):
             # [temp.append((word, self.grouped_syl[word])) for word in line]
             # self.display_syl.append(temp)
             for word in line:
-                temp.append((word, self.grouped_syl[word]))
+                key = self.append_keys(word)
+                temp.append((word, key))
             self.display_syl.append(temp)
+
+    def append_keys(self, word):
+        '''
+        Appends non-unique keys back for text print.
+        '''
+        if word in self.grouped_syl.keys():
+            return self.grouped_syl[word]
+        else:
+            print word
+            return [[word, 99]]
 
     def color_assignment(self):
         black = Fore.BLACK
-        colors = [Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA]
+        colors = [Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA, \
+                  Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA,\
+                  Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA]
 
         for line in self.display_syl:
             word_color = []
