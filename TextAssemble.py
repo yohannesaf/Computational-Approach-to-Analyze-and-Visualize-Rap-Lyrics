@@ -5,7 +5,7 @@ from finnsyll import FinnSyll
 import pronouncing as pr
 from syllabify.syllabify import syllabify as syl
 from hyphen import Hyphenator, dict_info
-from colorama import *
+from colorama import Fore
 import pandas as pd
 import numpy as np
 import sys
@@ -50,8 +50,6 @@ class TextAssemble(ScoreMechanism):
         temp = self.cluster_val_inversion()
         self.unique_clusters = list(set(temp.values()))
         [self.clustered_syl.append([self.word_syl_col[syl], cl]) for  syl, cl in temp.iteritems()]
-        # for syl, cl in temp.iteritems():
-        #     self.clustered_syl.append([self.word_syl_col[syl], cl])
 
     def cluster_val_inversion(self):
         '''
@@ -63,12 +61,6 @@ class TextAssemble(ScoreMechanism):
         [temp.update({sound:cl}) if len(syl) > 1 else temp.update({syl[0]:99}) \
             for cl, syl in self.clusters.iteritems() for sound in syl ]
         return temp
-        # for cl, syl in self.clusters.iteritems():
-        #     if len(syl) > 1:
-        #         [temp.update({sound:cl}) for sound in syl]
-        #     else:
-        #         temp.update({syl[0]:99})
-        # return temp
 
     def syl_combine(self):
         word_ind = 0
@@ -78,12 +70,11 @@ class TextAssemble(ScoreMechanism):
             self.grouped_syl.update({key:temp})
             word_ind += syl_len
 
-
     def word_syl_count(self):
         syl_counts = OrderedDict()
-        for key, val in self.phonetic_syl_dict.iteritems():
-            syl_counts.update({key:len(val)})
+        [syl_counts.update({key:len(val)}) for key, val in self.phonetic_syl_dict.iteritems()]
         return syl_counts
+
 
     def lyric_reconstruction(self):
         '''
@@ -91,16 +82,15 @@ class TextAssemble(ScoreMechanism):
         '''
         for line in self.lyrics_tokenized:
             temp = []
-            [temp.append((word, self.grouped_syl[word])) for word in line]
-            self.display_syl.append(temp)
-            # for word in line:
-            #     temp.append((word, self.grouped_syl[word]))
+            # [temp.append((word, self.grouped_syl[word])) for word in line]
             # self.display_syl.append(temp)
+            for word in line:
+                temp.append((word, self.grouped_syl[word]))
+            self.display_syl.append(temp)
 
     def color_assignment(self):
         black = Fore.BLACK
         colors = [Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA]
-        # num_clusters = len(self.unique_clusters) - 1
 
         for line in self.display_syl:
             word_color = []
@@ -110,11 +100,10 @@ class TextAssemble(ScoreMechanism):
                     if cl == 99:
                         syl_color.append(black + syl)
                     else:
-                        color_ind = self.unique_clusters.index(cl)
+                        color_ind = self.unique_clusters.index(cl) - 1
                         syl_color.append(colors[color_ind] + syl)
                 word_color.append([word, syl_color])
             self.colored_syl.append(word_color)
-
 
     def print_text(self):
         temp_text = []
@@ -122,8 +111,6 @@ class TextAssemble(ScoreMechanism):
             line_text = [''.join(syl_cl) for _, syl_cl in line]
             print ' '.join(line_text)
 
-
-
 if __name__ == '__main__':
 
-    text = TextAssemble('lyrics/mini.md')
+    text = TextAssemble('lyrics/hamilton_test.md')

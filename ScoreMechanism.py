@@ -133,4 +133,4 @@ class ScoreMechanism(PrepareText):
 
 if __name__ == '__main__':
 
-    score = ScoreMechanism('lyrics/shade_shiest.md')
+    score = ScoreMechanism('lyrics/mini.md')

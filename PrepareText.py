@@ -3,11 +3,12 @@ import numpy as np
 import pronouncing as pr
 from nltk.tokenize import word_tokenize
 from collections import OrderedDict, defaultdict
-from syllabify.syllabify import syllabify as syl
+from syllabify.syllabify import syllabify
 from nltk.corpus import cmudict
 from hyphen import Hyphenator, dict_info
 from hyphen.dictools import *
-from finnsyll import FinnSyll
+from unidecode import unidecode
+import regex
 import copy
 
 
@@ -26,6 +27,7 @@ class PrepareText(object):
         self.word_syl_col = [] # fix issue
 
         self.read_tokenize_file(filepath)
+        self.tokenize_lyric_clean_up()
         self.word_phonic_dict_func()
         self.clean_syllables_func()
         self.wrapping_vowel_func()
@@ -45,7 +47,17 @@ class PrepareText(object):
         with open(filepath) as f:
             for line in f.readlines():
                 self.root.append(line)
-                self.lyrics_tokenized.append(line.replace(',','').replace('?','').lower().split())
+                temp = regex.sub(ur"((?!-)\p{P})+", "", line)
+                self.lyrics_tokenized.append(temp.lower().split())
+
+    def tokenize_lyric_clean_up(self):
+        lines = []
+        for line in self.lyrics_tokenized:
+            words = []
+            for word in line:
+                words.append(unicode(word.decode('utf8').encode('ascii', errors='ignore')))
+            lines.append(words)
+        self.lyrics_tokenized = lines
 
     def word_phonic_dict_func(self):
         '''
@@ -69,7 +81,6 @@ class PrepareText(object):
 
     def word_syl_dict_update_func(self):
         word_syl_copy = self.word_syl_dict.copy()
-        f = FinnSyll()
         for (w1, s1), (p1, s2) in zip(word_syl_copy.items(), self.phonetic_syl_dict.items()):
             if len(s1) < len(s2):
                 leng = [len(sound) for sound in s1]
@@ -79,6 +90,28 @@ class PrepareText(object):
                 replace_syl = [temp_syl[:(n/2)], temp_syl[(n/2):]]
                 s1.extend(replace_syl)
                 self.word_syl_dict.update({w1:s1})
+
+    # def word_syl_dict_update_func(self):
+    #     word_syl_copy = self.word_syl_dict.copy()
+    #     for (w1, s1), (p1, s2) in zip(word_syl_copy.items(), self.phonetic_syl_dict.items()):
+    #         if len(s1) < len(s2):
+    #             leng = [len(sound) for sound in s1]
+    #             n = max(leng)
+    #             temp_syl = s1[leng.index(max(leng))]
+    #             s1.remove(temp_syl)
+    #             replace_syl = [temp_syl[:(n/2)], temp_syl[(n/2):]]
+    #             s1.extend(replace_syl)
+    #             self.word_syl_dict.update({w1:s1})
+
+            # if len(s1) < len(s2):
+            #     leng = [len(sound) for sound in s1]
+            #     n = max(leng)
+            #     ind = leng.index(n)
+            #     temp_syl = s1[leng.index(max(leng))]
+            #     s1.remove(temp_syl)
+            #     replace_syl = [temp_syl[:(n/2)], temp_syl[(n/2):]]
+            #     s1.extend(replace_syl)
+            #     self.word_syl_dict.update({w1:s1})
 
     def wrapping_vowel_func(self):
         '''
@@ -95,7 +128,7 @@ class PrepareText(object):
         Input: None
         Output: Ordered dictionary
                Keys - word
-               Value - phonetic syllable replresentation of each word
+               Value - phonetic syllable representation of each word
         Calls the function constructing_syllables & clean up the syllables
         '''
         syl_temp = self.constructing_syllables()
@@ -112,11 +145,11 @@ class PrepareText(object):
         '''
         Output: Ordered dictionary
                Keys - word
-               Value - phonetic syllable resentation of each word
+               Value - phonetic syllable reprentation of each word
         '''
         syl_list = OrderedDict()
         for key, val in self.arpabet_dict.iteritems():
-            syl_of_key = syl(val.split())
+            syl_of_key = syllabify(val.split())
             syl_list.update({key:syl_of_key})
         return syl_list
 
@@ -127,9 +160,10 @@ class PrepareText(object):
 
         Unpacks the values into a single list
         '''
-        [self.phone_syl_col.extend(phone) for phone in self.wrapped_vowels.itervalues()]
-        # for phone in self.wrapped_vowels.itervalues():
-        #     self.phone_syl_col.extend(phone)
+        # [self.phone_syl_col.extend(phone) for phone in self.wrapped_vowels.itervalues()]
+        for phone in self.wrapped_vowels.itervalues():
+            for sound in phone:
+                self.phone_syl_col.append(sound)
 
     def word_syl_list_func(self):
         '''
@@ -138,11 +172,12 @@ class PrepareText(object):
 
         Unpacks the values into a single list
         '''
-        [self.word_syl_col.extend(syl) for syl in self.word_syl_dict.itervalues()]
-        # for syl in self.word_syl_dict.itervalues():
-        #     self.word_syl_col.extend(syl)
-
+        # [self.word_syl_col.extend(syl) for syl in self.word_syl_dict.itervalues()]
+        for syl in self.word_syl_dict.itervalues():
+            for sound in syl:
+                self.word_syl_col.append(sound)
 
 
 if __name__ == '__main__':
-    prep = PrepareText('lyrics/shade_shiest.md')
+
+    prep = PrepareText('lyrics/hamilton_test.md')
