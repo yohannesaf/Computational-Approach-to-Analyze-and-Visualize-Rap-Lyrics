@@ -19,6 +19,7 @@ class TextAssemble(ScoreMechanism):
         self.M_output = None
         self.clusters = defaultdict()
         self.unique_clusters = 0
+        self.clustered_syl_dict = defaultdict()
         self.clustered_syl = []
         self.grouped_syl = OrderedDict()
         self.display_syl = []
@@ -27,6 +28,7 @@ class TextAssemble(ScoreMechanism):
 
         self.mcl_cluster()
         self.word_name_assignment()
+        self.clustered_syl_list()
         self.syl_combine()
         self.lyric_reconstruction()
         self.color_assignment()
@@ -39,7 +41,7 @@ class TextAssemble(ScoreMechanism):
         self.M_output, self.clusters = mcl(self.adjacency_matrix,
                           expand_factor = 7,
                           inflate_factor = 3,
-                          max_loop = 100,
+                          max_loop = 100
                         #   mult_factor = 4
                           )
 
@@ -49,7 +51,15 @@ class TextAssemble(ScoreMechanism):
         '''
         temp = self.cluster_val_inversion()
         self.unique_clusters = list(set(temp.values()))
-        [self.clustered_syl.append([self.word_syl_col[syl], cl]) for  syl, cl in temp.iteritems()]
+        [self.clustered_syl_dict.update({self.word_syl_col[syl]:cl}) for  syl, cl in temp.iteritems()]
+
+    def clustered_syl_list(self):
+        for word in self.word_syl_col:
+            if word in self.clustered_syl_dict.iterkeys():
+                self.clustered_syl.append([word, self.clustered_syl_dict[word]])
+            else:
+                self.clustered_syl.append([word, 99])
+
 
     def cluster_val_inversion(self):
         '''
@@ -67,6 +77,7 @@ class TextAssemble(ScoreMechanism):
         syl_counts = self.word_syl_count()
         for key, syl_len in syl_counts.iteritems():
             temp = self.clustered_syl[word_ind:word_ind+syl_len]
+            print key, temp
             self.grouped_syl.update({key:temp})
             word_ind += syl_len
 
@@ -96,7 +107,6 @@ class TextAssemble(ScoreMechanism):
         if word in self.grouped_syl.keys():
             return self.grouped_syl[word]
         else:
-            print word
             return [[word, 99]]
 
     def color_assignment(self):
@@ -126,4 +136,4 @@ class TextAssemble(ScoreMechanism):
 
 if __name__ == '__main__':
 
-    text = TextAssemble('lyrics/shade_shiest.md')
+    text = TextAssemble('lyrics/Jay Z.md')
