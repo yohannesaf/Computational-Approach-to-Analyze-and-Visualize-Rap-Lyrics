@@ -42,7 +42,7 @@ class TextAssemble(ScoreMechanism):
                           expand_factor = 7,
                           inflate_factor = 3,
                           max_loop = 100
-                        #   mult_factor = 4
+                        #   mult_factor = 4 
                           )
 
     def word_name_assignment(self):
@@ -77,9 +77,9 @@ class TextAssemble(ScoreMechanism):
         syl_counts = self.word_syl_count()
         for key, syl_len in syl_counts.iteritems():
             temp = self.clustered_syl[word_ind:word_ind+syl_len]
-            print key, temp
             self.grouped_syl.update({key:temp})
             word_ind += syl_len
+
 
     def word_syl_count(self):
         syl_counts = OrderedDict()

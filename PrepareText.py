@@ -42,7 +42,7 @@ class PrepareText(object):
         '''
         # self.root = filepath.split('\n')
         # for line in self.root:
-        #     self.lyrics_tokenized.append(line.split())
+        #     self.lyrics_tokenized.append(line.split()) <
 
         with open(filepath) as f:
             for line in f.readlines():
@@ -89,6 +89,9 @@ class PrepareText(object):
                 split1, split2 = self.first_vowel_split(temp_syl)
                 s1.remove(temp_syl)
                 s1.extend([split1, split2])
+                self.word_syl_dict.update({w1:s1})
+            while len(s1) > len(s2):
+                s1 = [''.join(s1)]
                 self.word_syl_dict.update({w1:s1})
 
     def first_vowel_split(self, word):
@@ -175,4 +178,4 @@ class PrepareText(object):
 
 if __name__ == '__main__':
 
-    prep = PrepareText('lyrics/shade_shiest.md')
+    prep = PrepareText('lyrics/Jay Z.md')
