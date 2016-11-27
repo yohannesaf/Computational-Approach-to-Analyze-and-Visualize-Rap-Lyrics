@@ -23,8 +23,8 @@ class PrepareText(object):
         self.word_syl_dict = OrderedDict()
         self.phonetic_syl_dict = OrderedDict()
         self.wrapped_vowels = OrderedDict()
-        self.phone_syl_col = [] # fix issue
-        self.word_syl_col = [] # fix issue
+        self.phone_syl_col = []
+        self.word_syl_col = []
 
         self.read_tokenize_file(filepath)
         self.tokenize_lyric_clean_up()
@@ -81,16 +81,19 @@ class PrepareText(object):
     def word_syl_dict_update_func(self):
         word_syl_copy = self.word_syl_dict.copy()
         for (w1, s1), (p1, s2) in zip(word_syl_copy.items(), self.phonetic_syl_dict.items()):
-            while len(s1) < len(s2):
-            # if len(s1) != len(s2):
+            # while len(s1) < len(s2):
+            if len(s1) < len(s2):
                 leng = [len(sound) for sound in s1]
-                n = max(leng)
+                ind = leng.index(max(leng))
                 temp_syl = s1[leng.index(max(leng))]
+                # print temp_syl
                 split1, split2 = self.first_vowel_split(temp_syl)
                 s1.remove(temp_syl)
-                s1.extend([split1, split2])
+                s1.insert(ind, split1)
+                s1.insert(ind+1, split2)
                 self.word_syl_dict.update({w1:s1})
-            while len(s1) > len(s2):
+            # while len(s1) > len(s2):
+            if len(s1) > len(s2):
                 s1 = [''.join(s1)]
                 self.word_syl_dict.update({w1:s1})
 
@@ -98,18 +101,21 @@ class PrepareText(object):
         '''
         Additional split of sylable to match the number of phonetic syl
         '''
-        index = self.first_vowel_index(word)
+        index = self.index_split(word)
         index += 1
         return word[:index], word[index:]
 
-    def first_vowel_index(self, word):
+    def index_split(self, word):
         '''
         Returns the index of the first vowel occurance
         '''
         for index, char in enumerate(word):
             if char in 'aeiouy':
-                return index
-
+                return int(index)
+            elif len(word) == 2:
+                return 0
+            else:
+                return len(word)/2
 
     def wrapping_vowel_func(self):
         '''
@@ -178,4 +184,4 @@ class PrepareText(object):
 
 if __name__ == '__main__':
 
-    prep = PrepareText('lyrics/Jay Z.md')
+    prep = PrepareText('lyrics/Andre_3000.md')

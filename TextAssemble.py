@@ -42,7 +42,7 @@ class TextAssemble(ScoreMechanism):
                           expand_factor = 7,
                           inflate_factor = 3,
                           max_loop = 100
-                        #   mult_factor = 4 
+                        #   mult_factor = 4
                           )
 
     def word_name_assignment(self):
@@ -113,6 +113,10 @@ class TextAssemble(ScoreMechanism):
         black = Fore.BLACK
         colors = [Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA, \
                   Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA,\
+                  Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA, \
+                  Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA, \
+                  Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA, \
+                  Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA, \
                   Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA]
 
         for line in self.display_syl:
@@ -136,4 +140,4 @@ class TextAssemble(ScoreMechanism):
 
 if __name__ == '__main__':
 
-    text = TextAssemble('lyrics/Jay Z.md')
+    text = TextAssemble('lyrics/dj_quik.md')
