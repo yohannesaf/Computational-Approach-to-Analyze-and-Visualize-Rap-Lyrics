@@ -140,4 +140,4 @@ class TextAssemble(ScoreMechanism):
 
 if __name__ == '__main__':
 
-    text = TextAssemble('lyrics/dj_quik.md')
+    text = TextAssemble('lyrics/tupac2.md')

@@ -81,8 +81,8 @@ class PrepareText(object):
     def word_syl_dict_update_func(self):
         word_syl_copy = self.word_syl_dict.copy()
         for (w1, s1), (p1, s2) in zip(word_syl_copy.items(), self.phonetic_syl_dict.items()):
-            # while len(s1) < len(s2):
-            if len(s1) < len(s2):
+            while len(s1) < len(s2):
+            # if len(s1) < len(s2):
                 leng = [len(sound) for sound in s1]
                 ind = leng.index(max(leng))
                 temp_syl = s1[leng.index(max(leng))]
@@ -92,8 +92,8 @@ class PrepareText(object):
                 s1.insert(ind, split1)
                 s1.insert(ind+1, split2)
                 self.word_syl_dict.update({w1:s1})
-            # while len(s1) > len(s2):
-            if len(s1) > len(s2):
+            while len(s1) > len(s2):
+            # if len(s1) > len(s2):
                 s1 = [''.join(s1)]
                 self.word_syl_dict.update({w1:s1})
 
