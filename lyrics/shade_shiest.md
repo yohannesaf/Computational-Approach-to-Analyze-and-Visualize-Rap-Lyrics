@@ -9,10 +9,8 @@ Mister quick to buy a chain, mister let the chain hang
 Showin off the broads
 I'm mister quick to get to bang
 Now you might catch Sheist gettin bent in every coast
-Still the nigga with the heat gettin rid of every coast
+Still the nigga with the heat gettin rid of every coastp
 Still fuckin with Mizz, we run trizz when we bored
 And you know I got the X, twenties what they hittin for
 See me if you want to score, 'cause I got what you need
-Or you can see me at the club, tinted SUV
-Gettin in for free, I'm bout to get my name known
-Sheist pull a heist nigga just to get it on
+
