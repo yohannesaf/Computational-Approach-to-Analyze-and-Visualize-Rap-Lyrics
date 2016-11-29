@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 import sys
 
-class TextAssemble(ScoreMechanism):
+class RapVision(ScoreMechanism):
     '''
     Clusters the syllables into a ryhme families, and prints them with unique color
     for each ryhme groups
@@ -149,4 +149,4 @@ class TextAssemble(ScoreMechanism):
 
 if __name__ == '__main__':
 
-    text = TextAssemble('lyrics/nas.md')
+    text = RapVision('lyrics/nas.md')
