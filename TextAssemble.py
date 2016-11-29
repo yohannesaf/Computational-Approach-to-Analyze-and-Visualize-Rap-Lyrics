@@ -39,10 +39,10 @@ class TextAssemble(ScoreMechanism):
         Computes Marcov Cluster Algorithm
         '''
         self.M_output, self.clusters = mcl(self.adjacency_matrix,
-                          expand_factor = 7,
-                          inflate_factor = 3,
-                          max_loop = 100
-                        #   mult_factor = 4
+                          expand_factor = 9,
+                          inflate_factor = 4,
+                          max_loop = 1000,
+                          mult_factor = 1
                           )
 
     def word_name_assignment(self):
@@ -140,4 +140,4 @@ class TextAssemble(ScoreMechanism):
 
 if __name__ == '__main__':
 
-    text = TextAssemble('lyrics/tupac2.md')
+    text = TextAssemble('lyrics/Angelica.md')

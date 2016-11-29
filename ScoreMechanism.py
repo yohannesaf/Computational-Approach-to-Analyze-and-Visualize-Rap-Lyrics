@@ -93,7 +93,7 @@ class ScoreMechanism(PrepareText):
         elif (ind1 > ph1_len.index(max(ph1_len))) and (ind2 > ph2_len.index(max(ph2_len))):
             return .5
         else:
-            return 3
+            return 1
 
     def vowel_score(self, sound):
         '''
@@ -103,9 +103,9 @@ class ScoreMechanism(PrepareText):
         Assigns score to a common phone vowel bewteen 2 words based on their stress.
         '''
         if sound[-1] > 0:
-            return 2.5
+            return 1.5
         else:
-            return 1.6
+            return 1
 
     def sound_intersect(self, phonetic1, phonetic2):
         '''
