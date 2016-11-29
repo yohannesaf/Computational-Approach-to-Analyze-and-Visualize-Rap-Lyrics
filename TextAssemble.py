@@ -12,6 +12,8 @@ import sys
 
 class TextAssemble(ScoreMechanism):
     '''
+    Clusters the syllables into a ryhme families, and prints them with unique color
+    for each ryhme groups
     '''
 
     def __init__(self, filepath):
@@ -73,6 +75,9 @@ class TextAssemble(ScoreMechanism):
         return temp
 
     def syl_combine(self):
+        '''
+        Groups each words syllables together
+        '''
         word_ind = 0
         syl_counts = self.word_syl_count()
         for key, syl_len in syl_counts.iteritems():
@@ -82,6 +87,9 @@ class TextAssemble(ScoreMechanism):
 
 
     def word_syl_count(self):
+        '''
+        Returns the syllable counts for each word
+        '''
         syl_counts = OrderedDict()
         [syl_counts.update({key:len(val)}) for key, val in self.phonetic_syl_dict.iteritems()]
         return syl_counts
@@ -93,8 +101,6 @@ class TextAssemble(ScoreMechanism):
         '''
         for line in self.lyrics_tokenized:
             temp = []
-            # [temp.append((word, self.grouped_syl[word])) for word in line]
-            # self.display_syl.append(temp)
             for word in line:
                 key = self.append_keys(word)
                 temp.append((word, key))
@@ -110,6 +116,9 @@ class TextAssemble(ScoreMechanism):
             return [[word, 99]]
 
     def color_assignment(self):
+        '''
+        Assigns unique color for each unique ryhme families
+        '''
         color_cl = copy.deepcopy(self.unique_clusters)
         color_cl.pop(color_cl.index(99))
         black = 233
@@ -130,6 +139,9 @@ class TextAssemble(ScoreMechanism):
 
 
     def print_text(self):
+        '''
+        Prints color coded lyrics
+        '''
         temp_text = []
         for line in self.colored_syl:
             line_text = [''.join(syl_cl) for _, syl_cl in line]
@@ -137,4 +149,4 @@ class TextAssemble(ScoreMechanism):
 
 if __name__ == '__main__':
 
-    text = TextAssemble('lyrics/Angelica.md')
+    text = TextAssemble('lyrics/nas.md')

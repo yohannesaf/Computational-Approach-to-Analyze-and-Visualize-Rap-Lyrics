@@ -14,6 +14,7 @@ import copy
 
 class PrepareText(object):
     '''
+    Breaks lyrics apart for analysis
     '''
 
     def __init__(self, filepath):
@@ -40,10 +41,6 @@ class PrepareText(object):
         '''
         Returns a lists of tokenize lyrics
         '''
-        # self.root = filepath.split('\n')
-        # for line in self.root:
-        #     self.lyrics_tokenized.append(line.split()) <
-
         with open(filepath) as f:
             for line in f.readlines():
                 self.root.append(line)
@@ -79,21 +76,21 @@ class PrepareText(object):
                         print e
 
     def word_syl_dict_update_func(self):
+        '''
+        Updates word syllables not syllabified like phonetic syllables
+        '''
         word_syl_copy = self.word_syl_dict.copy()
         for (w1, s1), (p1, s2) in zip(word_syl_copy.items(), self.phonetic_syl_dict.items()):
             while len(s1) < len(s2):
-            # if len(s1) < len(s2):
                 leng = [len(sound) for sound in s1]
                 ind = leng.index(max(leng))
                 temp_syl = s1[leng.index(max(leng))]
-                # print temp_syl
                 split1, split2 = self.first_vowel_split(temp_syl)
                 s1.remove(temp_syl)
                 s1.insert(ind, split1)
                 s1.insert(ind+1, split2)
                 self.word_syl_dict.update({w1:s1})
             while len(s1) > len(s2):
-            # if len(s1) > len(s2):
                 s1 = [''.join(s1)]
                 self.word_syl_dict.update({w1:s1})
 
@@ -164,7 +161,6 @@ class PrepareText(object):
 
         Unpacks the values into a single list
         '''
-        # [self.phone_syl_col.extend(phone) for phone in self.wrapped_vowels.itervalues()]
         for phone in self.wrapped_vowels.itervalues():
             for sound in phone:
                 self.phone_syl_col.append(sound)
@@ -176,7 +172,6 @@ class PrepareText(object):
 
         Unpacks the values into a single list
         '''
-        # [self.word_syl_col.extend(syl) for syl in self.word_syl_dict.itervalues()]
         for syl in self.word_syl_dict.itervalues():
             for sound in syl:
                 self.word_syl_col.append(sound)

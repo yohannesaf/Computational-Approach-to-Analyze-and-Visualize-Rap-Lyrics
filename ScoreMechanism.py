@@ -36,13 +36,13 @@ class ScoreMechanism(PrepareText):
 
 
     def score_shape(self):
+        '''
+        Initializes Adjacenty matrix with zeros
+        '''
         dim = 0
         leng = [len(word) for word in self.phonetic_syl_dict.itervalues()]
         dim = sum(leng)
         return np.zeros((dim,dim))
-        # for word in self.phonetic_syl_dict.itervalues():
-        #     dim += len(word)
-        # return np.zeros((dim,dim))
 
 
     def final_score(self, phonetic1, phonetic2, common_sounds):
