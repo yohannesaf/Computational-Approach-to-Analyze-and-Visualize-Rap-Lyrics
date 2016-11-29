@@ -1,11 +1,11 @@
 from mcl_clustering import mcl
 from ScoreMechanism import ScoreMechanism
 from collections import OrderedDict, defaultdict
-from finnsyll import FinnSyll
-import pronouncing as pr
 from syllabify.syllabify import syllabify as syl
 from hyphen import Hyphenator, dict_info
-from colorama import Fore
+from colors import color
+import random
+import copy
 import pandas as pd
 import numpy as np
 import sys
@@ -39,10 +39,10 @@ class TextAssemble(ScoreMechanism):
         Computes Marcov Cluster Algorithm
         '''
         self.M_output, self.clusters = mcl(self.adjacency_matrix,
-                          expand_factor = 9,
-                          inflate_factor = 4,
-                          max_loop = 1000,
-                          mult_factor = 1
+                          expand_factor = 7,
+                          inflate_factor = 3,
+                          max_loop = 100,
+                          mult_factor = 2
                           )
 
     def word_name_assignment(self):
@@ -110,14 +110,10 @@ class TextAssemble(ScoreMechanism):
             return [[word, 99]]
 
     def color_assignment(self):
-        black = Fore.BLACK
-        colors = [Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA, \
-                  Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA,\
-                  Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA, \
-                  Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA, \
-                  Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA, \
-                  Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA, \
-                  Fore.GREEN, Fore.RED, Fore.BLUE, Fore.CYAN, Fore.YELLOW, Fore.MAGENTA]
+        color_cl = copy.deepcopy(self.unique_clusters)
+        color_cl.pop(color_cl.index(99))
+        black = 233
+        color_pallets = random.sample(range(230), len(color_cl))
 
         for line in self.display_syl:
             word_color = []
@@ -125,12 +121,13 @@ class TextAssemble(ScoreMechanism):
                 syl_color = []
                 for syl, cl in syl_cl:
                     if cl == 99:
-                        syl_color.append(black + syl)
+                        syl_color.append(color(syl, fg=black))
                     else:
-                        color_ind = self.unique_clusters.index(cl) - 1
-                        syl_color.append(colors[color_ind] + syl)
+                        index_cl = color_cl.index(cl)
+                        syl_color.append(color(syl, fg=color_cl[index_cl]))
                 word_color.append([word, syl_color])
             self.colored_syl.append(word_color)
+
 
     def print_text(self):
         temp_text = []
