@@ -21,7 +21,7 @@ RapVision can be used either in Terminal or in jupyter notebook. Import the clas
 
 	input:
 
-	![image] (K_O.png)
+	![image] (image\K_O.png)
 
 	Output:
 
