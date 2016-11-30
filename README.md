@@ -9,23 +9,24 @@ This implementation is still in beta and is not yet optimized to handle slangs a
 
 RapVision can be used either in Terminal or in jupyter notebook. Import the classes and run
 
+	git clone https://github.com/yohannesaf/Computational-Approach-to-Analyze-and-Visualize-Rap-Lyrics
+	cd Computational-Approach-to-Analyze-and-Visualize-Rap-Lyrics
+	
 	from TextAssemble import RapVision
-
 	RapVision(filepath)
 
 ## Example
 
 	from TextAssemble import RapVision
-
 	RapVision('lyrics/mini.md')
 
 	input:
 
-	![images] (K_O.png)
+	![alt tag](https://github.com/yohannesaf/Computational-Approach-to-Analyze-and-Visualize-Rap-Lyrics/blob/master/image/K_O.png "Original")
 
 	Output:
 
-	![images] (Kendrick.png)
+	![alt tag](https://github.com/yohannesaf/Computational-Approach-to-Analyze-and-Visualize-Rap-Lyrics/blob/master/image/Kendrick.png "Viduslized")
 
 
 	
