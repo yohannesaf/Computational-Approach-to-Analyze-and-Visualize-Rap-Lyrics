@@ -4,19 +4,16 @@ Rapping, spoken rhyming words, involves to creatively construct an elaborate and
 
 Analyzing rap lyrics algorithmically requires understanding the different types of rhyming structure; perfect and imperfect rhymes.[1] Perfect rhymes consists of words that sounds similar such as school and stool. Imperfect rhymes only partially share similar sounds; train and restrain are imperfect rhymes
 
-The aim of this capstone project is to create a web app that identify and visually present families of words that rhyme; words that rhymes will be highlighted using similar color[?]. The outline of the process is as follows:
+The aim of this capstone project is to create an algorithm that identify and visually present families of words that rhyme; words that rhymes will be highlighted using similar color[?]. The outline of the process is as follows:
 
 1. Tokenize each word and translate each word into phonetic language. CMU dictionary will be used to achieve such task.
 
-2. Devise a rhyme scoring system between each words. This will yield an undirected graph with syllables as nodes and their score as the weight of the edges. Stressed syllable of words is rhymes tennd to be heard most strongly between two stressed or emphasized syllables. As such, scoring scheme will follow as such.
+2. Devise a rhyme scoring system between each words. This will yield an undirected graph with syllables as nodes and their score as the weight of the edges. Stressed syllable of words is rhymes tend to be heard most strongly between two stressed or emphasized syllables. As such, scoring scheme will follow as such.
 
-Approach 1:
 - Two matching stressed syllables are given the highest score possibles.
 - A pair of syllables with a single stressed are less likely to rhymes and thus are given a lower score
 - The lowest score is given to two unstressed syllables.
 
-Approach 2:
-- Use similarity metric between phonetic words to assign a score value of each rhyme.
 
 [Final score allocation will depend based on qualitative evaluation of MCL Algorithm]
 
