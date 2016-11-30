@@ -21,7 +21,7 @@ RapVision can be used either in Terminal or in jupyter notebook. Import the clas
 
 	input:
 
-	![image] (https://github.com/yohannesaf/Computational-Approach-to-Analyze-and-Visualize-Rap-Lyrics/blob/master/image/K_O.png)
+	![K_O] (https://github.com/yohannesaf/Computational-Approach-to-Analyze-and-Visualize-Rap-Lyrics/blob/master/image/K_O.png)
 
 	Output:
 
