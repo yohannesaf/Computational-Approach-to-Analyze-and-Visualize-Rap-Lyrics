@@ -1,0 +1,9 @@
+MCL-Markov-Cluster==0.3
+networkx==1.11
+nltk==3.2.1
+numpy==1.11.1
+pronouncing==0.1.2
+pyhyphen==2.0.5
+regex==2016.11.21
+sklearn==0.0
+unidecoder==0.4.19
