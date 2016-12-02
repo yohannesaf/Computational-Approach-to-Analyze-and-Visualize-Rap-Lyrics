@@ -1,12 +1,9 @@
-import pandas as pd
 import numpy as np
 import pronouncing as pr
-from nltk.tokenize import word_tokenize
 from collections import OrderedDict, defaultdict
 from syllabify.syllabify import syllabify
 from nltk.corpus import cmudict
 from hyphen import Hyphenator, dict_info
-from hyphen.dictools import *
 from unidecode import unidecode
 import regex
 import copy

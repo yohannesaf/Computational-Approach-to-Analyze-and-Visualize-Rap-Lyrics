@@ -2,7 +2,6 @@ from PrepareText import PrepareText
 from sklearn.feature_extraction.text import CountVectorizer
 from itertools import combinations
 import copy
-import pandas as pd
 import numpy as np
 
 class ScoreMechanism(PrepareText):

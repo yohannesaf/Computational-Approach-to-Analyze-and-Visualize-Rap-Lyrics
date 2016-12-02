@@ -1,13 +1,10 @@
 from mcl_clustering import mcl
 from ScoreMechanism import ScoreMechanism
 from collections import OrderedDict, defaultdict
-from syllabify.syllabify import syllabify as syl
-from hyphen import Hyphenator, dict_info
 from colors import color
+import numpy as np
 import random
 import copy
-import pandas as pd
-import numpy as np
 import sys
 
 class RapVision(ScoreMechanism):
