@@ -40,4 +40,5 @@ RapVision can be used either in Terminal or in jupyter notebook. Import the clas
 	7. regex
 	8. sklearn
 	9. unidecode
+	10. collections
 	
