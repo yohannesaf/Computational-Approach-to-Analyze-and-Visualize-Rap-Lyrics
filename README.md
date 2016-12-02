@@ -29,4 +29,16 @@ RapVision can be used either in Terminal or in jupyter notebook. Import the clas
 	![alt tag](https://github.com/yohannesaf/Computational-Approach-to-Analyze-and-Visualize-Rap-Lyrics/blob/master/image/Kendrick.png "Viduslized")
 
 
+## Necessary Python Packages
+
+	1. MCL-Markov-Cluster
+	2. networkx
+	3. nltk 
+	4. numpy
+	5. pronouncing
+	6. pyhyphen
+	7. regex
+	8. sklearn
+	9. unidecode
+	10. collections
 	
