@@ -26,9 +26,12 @@ class ScoreMechanism(PrepareText):
             for ind2, val2 in enumerate(row):
                 if val1 != val2:
                     common_sound = self.sound_intersect(val1, val2)
-                    if len(common_sound) > 1:
+                    leng = [len(syl) for syl in common_sound]
+                    if len(common_sound) > 1 and max(leng) > 2:
                         points = self.final_score(val1, val2, common_sound)
                         temp_score[ind1][ind2] = points
+                    else:
+                        temp_score[ind1][ind2] = 0
                 else:
                     temp_score[ind1][ind2] = 0
         self.adjacency_matrix = temp_score
