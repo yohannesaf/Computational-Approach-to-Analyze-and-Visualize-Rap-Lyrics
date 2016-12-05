@@ -113,13 +113,13 @@ class ScoreMechanism(PrepareText):
 
         Find common sounds in the two phonetics
         '''
-        # return list(set(phonetic1) & set(phonetic2))
-        intersect = list(set(phonetic1) & set(phonetic2))
-        leng = [leng(syl) for syl in intersect]
-        if max(leng) == 3:
-            return intersect
-        else:
-            return 0
+        return list(set(phonetic1) & set(phonetic2))
+        # intersect = list(set(phonetic1) & set(phonetic2))
+        # leng = [leng(syl) for syl in intersect]
+        # if max(leng) == 3:
+        #     return intersect
+        # else:
+        #     return []
 
     def is_vowel(self, text):
         '''
