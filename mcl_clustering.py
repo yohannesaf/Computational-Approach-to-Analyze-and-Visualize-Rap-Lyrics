@@ -1,3 +1,4 @@
+#SOURCE: https://github.com/koteth/python_mcl
 #!/usr/bin/env python
 
 import sys
@@ -117,7 +118,7 @@ def get_options():
                       default=60,
                       type=int,
                       help="max loops (default: %default)")
-    parser.add_option("-o", "--output", metavar="FILE", 
+    parser.add_option("-o", "--output", metavar="FILE",
                       help="output (default: stdout)")
 
     parser.add_option("-v", "--verbose",
@@ -126,7 +127,7 @@ def get_options():
     parser.add_option("-d", "--draw-graph",
                       action="store_true", dest="draw", default=False,
                       help="show graph with networkx (default: %default)")
-    
+
 
     (options, args) = parser.parse_args()
 
